@@ -6,12 +6,14 @@ import com.hackathon.photohunt.utility.SmsUtility;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.telephony.TelephonyManager;
 
 public class HomeActivity extends Activity {
 	
@@ -81,7 +83,11 @@ public class HomeActivity extends Activity {
     		    String location = m_model.getCurrentLocation();
     		    if(location != null)
     		    {
-    		    	SmsUtility.sendLocationText(phoneNumber, m_model.getCurrentLocation());
+    		    	 TelephonyManager mTelephonyMgr;
+    		         mTelephonyMgr = (TelephonyManager)
+    		                 getSystemService(Context.TELEPHONY_SERVICE); 
+    		         String number = mTelephonyMgr.getLine1Number();
+    		    	SmsUtility.sendLocationText(number, m_model.getCurrentLocation());
     		    }
     		    else
     		    {
