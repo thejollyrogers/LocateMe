@@ -1,16 +1,21 @@
 package com.hackathon.photohunt.utility;
 
 import android.content.Context;
+import android.location.Location;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 
 public class LocationUtility
 {
-	LocationManager m_manager;
-	Location
+	private final LocationManager m_manager;
+	
+	private LocationProvider m_provider;
+	private Location m_location;
 	
 	public LocationUtility(Context context)
 	{
 		m_manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+		m_provider = LocationManager.NETWORK_PROVIDER;
 	
 	}
 	
@@ -19,4 +24,10 @@ public class LocationUtility
 		
 	}
 	
+	public void stopListening()
+	{
+		
+	}
+	
+	public LocationListener 
 }
