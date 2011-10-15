@@ -8,6 +8,12 @@ public class GlobalConstants {
 	
 	public static final String PHONE_NUMBER_KEY = "com.hackathon.photohunt.phonenumber";
 	public static final String LOCATION_KEY = "com.hackacthon.photohunt.location";
-	public static final String IS_LOCATION_UPDATING_KEY = "com.hackathon.photohunt.location_updating"; 
+	public static final String IS_LOCATION_UPDATING_KEY = "com.hackathon.photohunt.location_updating";
+	
+	public static final String SHARED_PREF_DESTINATION_KEY = "destination";
+	public static final String SHARED_PREF_PHONE_NUMBER_KEY = "phonenumber";
+	
+	public static final String INCOMING = "incoming";
+	public static final String OUTGOING = "outgoing";
 
 }

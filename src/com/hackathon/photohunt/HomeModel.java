@@ -3,15 +3,19 @@ package com.hackathon.photohunt;
 import java.io.Closeable;
 import java.io.IOException;
 
-import com.hackathon.photohunt.utility.LocationUtility;
-
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.hackathon.photohunt.utility.LocationUtility;
 
 public class HomeModel implements Closeable
 {
@@ -64,7 +68,23 @@ public class HomeModel implements Closeable
 			@Override
 			public void onClick(View v)
 			{
-				// launch outgoing activity if they have an outgoing activity
+				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(m_activity);
+				if (prefs != null) {
+					String location = prefs.getString(GlobalConstants.SHARED_PREF_DESTINATION_KEY, null);
+					String phoneNumber = prefs.getString(GlobalConstants.SHARED_PREF_PHONE_NUMBER_KEY, null);
+					if (location != null) {
+						double[] coordinates = LocationUtility.convertStringToLatLong(location);
+						Intent intent = new Intent(m_activity, MapLocationActivity.class);
+						intent.setAction(GlobalConstants.OUTGOING);
+						intent.putExtra(GlobalConstants.LOCATION_KEY, coordinates);
+						intent.putExtra(GlobalConstants.PHONE_NUMBER_KEY, phoneNumber);
+						m_activity.startActivity(intent);
+					} else {
+						createErrorToast(R.string.no_outgoing);
+					}
+				} else {
+					createErrorToast(R.string.no_outgoing);
+				}
 			}
 			
 		});

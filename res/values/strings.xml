@@ -6,6 +6,7 @@
     <string name="incoming">INCOMING</string>
     <string name="outgoing">OUTGOING</string>
     <string name="no_incoming">No incoming friends.</string>
+    <string name="no_outgoing">No outgoing destination.</string>
     <string name="accept_sms_text">Phone number 206-465-1374 has sent you their location. Would you like to accept and allow them to see your position?</string>
     <string name="accept_and_allow">Accept and allow</string>
     <string name="accept_only">Accept only</string>

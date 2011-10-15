@@ -1,11 +1,15 @@
 package com.hackathon.photohunt;
 
 import com.hackathon.photohunt.services.IncomingUpdateService;
+import com.hackathon.photohunt.utility.LocationUtility;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -58,9 +62,16 @@ public class AcceptLocationSMSModel
 //				intent.putExtra(GlobalConstants.IS_LOCATION_UPDATING_KEY, true);
 //				mActivity.startActivity(intent);
 //				String directions="http://maps.google.com/maps?daddr="+mLocation[0]+","+mLocation[1];
+//				intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+				
+				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
+				Editor prefEdit = prefs.edit();
+				prefEdit.putString(GlobalConstants.SHARED_PREF_DESTINATION_KEY, LocationUtility.convertLatLongToString(mLocation[0], mLocation[1]));
+				prefEdit.putString(GlobalConstants.SHARED_PREF_PHONE_NUMBER_KEY, mPhoneNumber);
+				prefEdit.commit();
+				
 				String directions="google.navigation:q=" + mLocation[0] + "," + mLocation[1] + "&mode=w";
 				Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-//				intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
 				intent.setData(Uri.parse(directions));
 				mActivity.startActivity(intent);
 			}
@@ -80,12 +91,19 @@ public class AcceptLocationSMSModel
 //				Intent intent = new Intent(mActivity, MapLocationActivity.class);
 //				intent.putExtra(GlobalConstants.PHONE_NUMBER_KEY, mPhoneNumber);
 //				intent.putExtra(GlobalConstants.LOCATION_KEY, mLocation);
-//				intent.putExtra(GlobalConstants.IS_LOCATION_UPDATING_KEY, false);
+//				intent.putExtra(GlobalConstants.IS_LOCATION_UPDATING_KEY, true);
 //				mActivity.startActivity(intent);
 //				String directions="http://maps.google.com/maps?daddr="+mLocation[0]+","+mLocation[1];
+//				intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+				
+				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
+				Editor prefEdit = prefs.edit();
+				prefEdit.putString(GlobalConstants.SHARED_PREF_DESTINATION_KEY, LocationUtility.convertLatLongToString(mLocation[0], mLocation[1]));
+				prefEdit.putString(GlobalConstants.SHARED_PREF_PHONE_NUMBER_KEY, mPhoneNumber);
+				prefEdit.commit();
+				
 				String directions="google.navigation:q=" + mLocation[0] + "," + mLocation[1] + "&mode=w";
 				Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-//				intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
 				intent.setData(Uri.parse(directions));
 				mActivity.startActivity(intent);
 			}
