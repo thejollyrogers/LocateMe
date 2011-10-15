@@ -32,6 +32,15 @@ public class LocationUtility
 		return latitude + "," + longitude;
 	}
 	
+	public static double[] convertStringToLatLong(String str)
+	{
+		String[] strArray = str.split(",");
+		double[] coordinates = new double[2];
+		coordinates[0] = Double.parseDouble(strArray[0]);
+		coordinates[1] = Double.parseDouble(strArray[1]);
+		return coordinates;
+	}
+	
 	public void stopListening()
 	{
 		m_manager.removeUpdates(m_locationListener);

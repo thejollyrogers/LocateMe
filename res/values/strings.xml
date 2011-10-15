@@ -6,5 +6,9 @@
     <string name="incoming">INCOMING</string>
     <string name="outgoing">OUTGOING</string>
     <string name="no_incoming">No incoming friends.</string>
+    <string name="accept_sms_text">Click one of the three buttons.</string>
+    <string name="accept_and_allow">Accept and allow</string>
+    <string name="accept_only">Accept only</string>
+    <string name="decline">Decline</string>
     <string name="contact_retrieval_error">Error retrieving contact information</string>
 </resources>
