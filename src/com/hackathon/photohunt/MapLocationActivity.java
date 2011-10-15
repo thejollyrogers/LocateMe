@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -27,6 +28,7 @@ public class MapLocationActivity extends MapActivity {
 	private MapController mMapController;
 	private String mPhoneNumber;
 	private double[] mLocation;
+	private TextView mPhoneNumberTitle;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

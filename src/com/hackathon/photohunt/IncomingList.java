@@ -1,10 +1,13 @@
 package com.hackathon.photohunt;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import com.hackathon.photohunt.utility.IncomingDBAdapter;
@@ -48,13 +51,17 @@ public class IncomingList extends ListActivity {
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        switch(item.getItemId()) {
-            case 1:
-                mDbHelper.createEntry("Andrew", "1234", "here", "10");
-                fillData();
-                return true;
-        }
 
         return super.onMenuItemSelected(featureId, item);
+    }
+    
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+      AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+      alertDialog.setTitle("Item Selected");
+      alertDialog.setMessage("niggas");
+      alertDialog.show();
+
+      super.onListItemClick(l, v, position, id);
     }
 }

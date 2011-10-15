@@ -19,6 +19,7 @@ public class CreateNotificationTask extends AsyncTask<Void, Void, Void> {
 	
 	private Context mContext;
 	private String mPhoneNumber;
+	private String mName;
 	private double[] mCoordinates;
 	
 	public CreateNotificationTask(Context context, String data) {
@@ -28,6 +29,7 @@ public class CreateNotificationTask extends AsyncTask<Void, Void, Void> {
 		Log.d(TAG, "dataArray length: " + dataArray.length);
 		mPhoneNumber = dataArray[1];
 		mCoordinates = LocationUtility.convertStringToLatLong(dataArray[2]);
+		mName = dataArray[3];
 		Log.d(TAG, "converted coordinates: " + mCoordinates[0] + ", " + mCoordinates[1]);
 	}
 

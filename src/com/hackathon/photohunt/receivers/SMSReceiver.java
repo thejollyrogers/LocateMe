@@ -2,6 +2,8 @@ package com.hackathon.photohunt.receivers;
 
 import com.hackathon.photohunt.GlobalConstants;
 import com.hackathon.photohunt.asynctasks.CreateNotificationTask;
+import com.hackathon.photohunt.asynctasks.ParseLocationUpdateTextTask;
+import com.hackathon.photohunt.utility.IncomingDBAdapter;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -26,7 +28,8 @@ public class SMSReceiver extends BroadcastReceiver {
             msgs = new SmsMessage[pdus.length];
             // first message, do some pattern matching
             String firstMsg = SmsMessage.createFromPdu((byte[])pdus[0]).getMessageBody().toString();
-            boolean condition = firstMsg.startsWith(GlobalConstants.SMS_APP_IDENTIFIER);
+            boolean condition = firstMsg.startsWith(GlobalConstants.SMS_APP_IDENTIFIER) || 
+            		firstMsg.startsWith(GlobalConstants.SMS_APP_UPDATE_IDENTIFIER);
             if (condition) {
             	this.abortBroadcast();
                 for (int i=0; i<msgs.length; i++){
@@ -36,8 +39,17 @@ public class SMSReceiver extends BroadcastReceiver {
                     str += msgs[i].getMessageBody().toString();
 //                    str += "\n";
                 }
-            	CreateNotificationTask c = new CreateNotificationTask(context, str);
-            	c.execute();
+                if(firstMsg.startsWith(GlobalConstants.SMS_APP_IDENTIFIER))
+                {
+                	CreateNotificationTask c = new CreateNotificationTask(context, str);
+                	c.execute();
+                }
+                else if(firstMsg.startsWith(GlobalConstants.SMS_APP_UPDATE_IDENTIFIER))
+                {
+                	ParseLocationUpdateTextTask task = new ParseLocationUpdateTextTask(context, str);
+                	task.execute();
+                }
+            	
             }
 
             //---display the new SMS message---

@@ -94,7 +94,7 @@ public class IncomingDBAdapter {
                  KEY_LOCATION, KEY_ETA}, null, null, null, null, null);
     }
     
-    public boolean updateNote(long rowid, String location, String eta) {
+    public boolean updateEntry(long rowid, String location, String eta) {
         ContentValues args = new ContentValues();
         args.put(KEY_LOCATION, location);
         args.put(KEY_ETA, eta);

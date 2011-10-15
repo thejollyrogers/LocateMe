@@ -1,6 +1,7 @@
 package com.hackathon.photohunt.services;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -9,6 +10,7 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.telephony.TelephonyManager;
 
 import com.hackathon.photohunt.utility.LocationUtility;
 import com.hackathon.photohunt.utility.SmsUtility;
@@ -17,6 +19,7 @@ public class IncomingUpdateService extends Service {
 	
 	public LocationUtility m_locUtil;
 	public String m_destPhoneNumber;
+	public String mName;
 	
 	@Override
 	public void onCreate() {
@@ -28,6 +31,8 @@ public class IncomingUpdateService extends Service {
 		Bundle extras = intent.getExtras();
 		m_destPhoneNumber = extras.getString("phoneNumber");
 		String destinationLocation = extras.getString("location");
+		mName = extras.getString("name");
+		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		Editor prefEdit = prefs.edit();
 		prefEdit.putString("destination", destinationLocation);
@@ -45,7 +50,11 @@ public class IncomingUpdateService extends Service {
 		    public void onLocationChanged(Location location) {
 		    	String eta = "-1";
 		    	String loc = LocationUtility.convertLatLongToString(location.getLatitude(), location.getLongitude());
-		    	SmsUtility.sendLocationUpdateText(m_destPhoneNumber, loc, eta);
+		    	TelephonyManager mTelephonyMgr;
+		         mTelephonyMgr = (TelephonyManager)
+		                 getSystemService(Context.TELEPHONY_SERVICE); 
+		         String myNumber = mTelephonyMgr.getLine1Number();
+		    	SmsUtility.sendLocationUpdateText(m_destPhoneNumber, myNumber, loc, eta, mName);
 		    }
 
 		    public void onProviderEnabled(String provider) 

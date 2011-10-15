@@ -29,13 +29,15 @@ public class AcceptLocationSMSModel
 	private double[] mLocation;
 	private String mLocationString;
 	private boolean mSendLocation;
+	private String mName;
 
 	
-	public AcceptLocationSMSModel(Activity activity, String phoneNumber, double[] location)
+	public AcceptLocationSMSModel(Activity activity, String phoneNumber, double[] location, String name)
 	{
 		mActivity = activity;
 		mPhoneNumber = phoneNumber;
 		mLocation = location;
+		mName = name;
 
 		attachViewsToActivity();
 	}
@@ -153,6 +155,7 @@ public class AcceptLocationSMSModel
 			intent.setAction("com.hackathon.photohunt.services.IncomingUpdateService");
 			intent.putExtra("phoneNumber", mPhoneNumber);
 			intent.putExtra("location", mLocationString);
+			intent.putExtra("name", mName);
 			mActivity.startService(intent);
 			return null;
 		}

@@ -6,22 +6,24 @@ import android.telephony.SmsManager;
 
 public final class SmsUtility
 {
-	public static void sendLocationText(String phoneNumber, String location)
+	public static void sendLocationText(String sendNumber, String myNumber, String location, String name)
 	{
 		SmsManager manager = SmsManager.getDefault();
 		String message = GlobalConstants.SMS_APP_IDENTIFIER +
-				"\n" + phoneNumber +
-				"\n" + location;
-		manager.sendTextMessage(phoneNumber, null, message, null, null);
+				"\n" + myNumber +
+				"\n" + location +
+				"\n" + name;
+		manager.sendTextMessage(sendNumber, null, message, null, null);
 	}
 	
-	public static void sendLocationUpdateText(String phoneNumber, String location, String eta)
+	public static void sendLocationUpdateText(String sendNumber, String myNumber, String location, String eta, String name)
 	{
 		SmsManager manager = SmsManager.getDefault();
 		String message = GlobalConstants.SMS_APP_IDENTIFIER +
-				"\n" + phoneNumber +
+				"\n" + myNumber +
 				"\n" + location +
-				"\n" + eta;
-		manager.sendTextMessage(phoneNumber, null, message, null, null);
+				"\n" + eta +
+				"\n" + name;
+		manager.sendTextMessage(sendNumber, null, message, null, null);
 	}
 }

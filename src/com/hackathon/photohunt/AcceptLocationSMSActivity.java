@@ -25,7 +25,8 @@ public class AcceptLocationSMSActivity extends Activity {
         {
         	String phoneNumber = extras.getString(GlobalConstants.PHONE_NUMBER_KEY);
         	double[] location = extras.getDoubleArray(GlobalConstants.LOCATION_KEY);
-        	mModel = new AcceptLocationSMSModel(this, phoneNumber, location);
+        	String name = extras.getString(GlobalConstants.NAME);
+        	mModel = new AcceptLocationSMSModel(this, phoneNumber, location, name);
         }
     }
     

@@ -5,6 +5,7 @@ public class GlobalConstants {
 	public static final int INITIAL_SENT_LOCATION = 0;
 	
 	public static final String SMS_APP_IDENTIFIER = "Sent using FindYoFriend:";
+	public static final String SMS_APP_UPDATE_IDENTIFIER = "Update using FindYoFriend:";
 	
 	public static final String PHONE_NUMBER_KEY = "com.hackathon.photohunt.phonenumber";
 	public static final String LOCATION_KEY = "com.hackacthon.photohunt.location";
@@ -15,5 +16,7 @@ public class GlobalConstants {
 	
 	public static final String INCOMING = "incoming";
 	public static final String OUTGOING = "outgoing";
+	
+	public static final String NAME = "name";
 
 }

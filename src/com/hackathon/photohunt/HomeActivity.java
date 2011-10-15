@@ -54,7 +54,8 @@ public class HomeActivity extends Activity {
     	if(requestCode == CONTACT_RESULT)
     		if(resultCode == Activity.RESULT_OK)
     		{
-    			String phoneNumber = null;
+    			String theirNumber = null;
+    			String name = null;
     			// get contact data, create SMS and send
     			Uri uri = data.getData();
     			ContentResolver cr = getContentResolver();
@@ -65,7 +66,7 @@ public class HomeActivity extends Activity {
     		    {
     		        String id = cur.getString(
     	                        cur.getColumnIndex(ContactsContract.Contacts._ID));
-    		        String name = cur.getString(
+    		        name = cur.getString(
     	                        cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
 	    	 		if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) 
 	    	 		{
@@ -75,7 +76,7 @@ public class HomeActivity extends Activity {
 	    	 		 		    ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?", 
 	    	 		 		    new String[]{id}, null);
 	    	 		 	        while (pCur.moveToNext()) {
-	    	 		 		       phoneNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+	    	 		 		       theirNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 	    	 		 	        } 
 	    	 		 	        pCur.close();
 	    	 	    }
@@ -87,7 +88,7 @@ public class HomeActivity extends Activity {
     		         mTelephonyMgr = (TelephonyManager)
     		                 getSystemService(Context.TELEPHONY_SERVICE); 
     		         String number = mTelephonyMgr.getLine1Number();
-    		    	SmsUtility.sendLocationText(number, m_model.getCurrentLocation());
+    		    	SmsUtility.sendLocationText(theirNumber, number, m_model.getCurrentLocation(), name);
     		    }
     		    else
     		    {
