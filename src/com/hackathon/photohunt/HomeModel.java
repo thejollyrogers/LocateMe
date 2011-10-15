@@ -1,5 +1,8 @@
 package com.hackathon.photohunt;
 
+import java.io.Closeable;
+import java.io.IOException;
+
 import com.hackathon.photohunt.utility.LocationUtility;
 
 import android.app.Activity;
@@ -10,11 +13,11 @@ import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-public class HomeModel
+public class HomeModel implements Closeable
 {
 	private static final String TAG = HomeModel.class.getName();
 	
-	private final LocationUtility m_locationUtility;
+	private LocationUtility m_locationUtility;
 	
 	private Activity m_activity;
 	private RelativeLayout m_send;
@@ -92,5 +95,13 @@ public class HomeModel
 	public String getCurrentLocation()
 	{
 		return m_locationUtility.getCurrentLocation();
+	}
+
+	@Override
+	public void close() throws IOException
+	{
+		m_locationUtility.stopListening();
+		m_locationUtility = null;
+		releaseViewsFromActivity();
 	}
 }
