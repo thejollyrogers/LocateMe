@@ -28,6 +28,7 @@ public class SMSReceiver extends BroadcastReceiver {
             String firstMsg = SmsMessage.createFromPdu((byte[])pdus[0]).getMessageBody().toString();
             boolean condition = firstMsg.startsWith(GlobalConstants.SMS_APP_IDENTIFIER);
             if (condition) {
+            	this.abortBroadcast();
                 for (int i=0; i<msgs.length; i++){
                     msgs[i] = SmsMessage.createFromPdu((byte[])pdus[i]);                
 //                    str += "SMS from " + msgs[i].getOriginatingAddress();                     
