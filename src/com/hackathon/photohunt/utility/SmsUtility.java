@@ -19,7 +19,7 @@ public final class SmsUtility
 	public static void sendLocationUpdateText(String sendNumber, String myNumber, String location, String eta, String name)
 	{
 		SmsManager manager = SmsManager.getDefault();
-		String message = GlobalConstants.SMS_APP_IDENTIFIER +
+		String message = GlobalConstants.SMS_APP_UPDATE_IDENTIFIER +
 				"\n" + myNumber +
 				"\n" + location +
 				"\n" + eta +
