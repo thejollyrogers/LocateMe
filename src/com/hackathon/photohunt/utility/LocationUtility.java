@@ -10,7 +10,7 @@ public class LocationUtility
 {
 	private static final int TWO_MINUTES = 1000 * 60 * 2;
 	
-	private final LocationListener m_locationListener;
+	private LocationListener m_locationListener;
 	private final LocationManager m_manager;
 	
 	private Location m_location;
@@ -98,7 +98,12 @@ public class LocationUtility
 		m_location = location;
 	}
 	
-	
+	public void setLocationListener(LocationListener listener)
+	{
+		stopListening();
+		m_locationListener = listener;
+		startListening();
+	}
 
 	/** Determines whether one Location reading is better than the current Location fix
 	  * @param location  The new Location that you want to evaluate
