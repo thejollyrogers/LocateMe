@@ -10,6 +10,6 @@ public class HomeActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_layout);
-        Log.d("hello", "change");
+        Log.d("hello", "sup nigga");
     }
 }

@@ -4,9 +4,56 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
+    
+    <RelativeLayout 
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:id="@+id/send_button"
+    	android:background="@drawable/background_gradient_drawable" android:clickable="true">
+    	<TextView 
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:text="@string/send" 
+    		android:textSize="80sp" 
+    		android:textColor="#000000" 
+    		android:layout_marginLeft="10dp" 
+    		android:layout_centerHorizontal="true"
+    		android:layout_toLeftOf="@+id/crosshairs">
+    	</TextView>
+    	<ImageView 
+	    	android:src="@drawable/crosshairs" 
+	    	android:id="@+id/crosshairs" 
+	    	android:layout_alignParentTop="true" 
+	    	android:layout_alignParentRight="true" 
+	    	android:layout_marginRight="8dp"
+	    	android:layout_marginLeft="8dp" 
+	    	android:layout_marginTop="4dp" android:layout_width="75dp" android:layout_height="75dp">
+    	</ImageView>
+    
+    </RelativeLayout>
+    
+    <RelativeLayout 
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:id="@+id/send_button" android:background="@drawable/background_gradient_drawable_upsidedown" android:clickable="true">
+    	<TextView 
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:textSize="40sp" 
+    		android:textColor="#000000" 
+    		android:layout_marginLeft="10dp" 
+    		android:layout_centerHorizontal="true"
+    		android:layout_centerVertical="true"
+    		android:layout_toLeftOf="@+id/crosshairs" android:text="@string/incoming">
+    	</TextView>
+    	<ImageView 
+	    	android:id="@+id/crosshairs" 
+	    	android:layout_alignParentTop="true" 
+	    	android:layout_alignParentRight="true" 
+	    	android:layout_marginRight="8dp"
+	    	android:layout_marginLeft="8dp" 
+	    	android:layout_marginTop="4dp" android:src="@drawable/incoming_arrow" android:scaleType="fitXY" android:layout_width="75dp" android:layout_height="75dp">
+    	</ImageView>
+    
+    </RelativeLayout>
 </LinearLayout>
