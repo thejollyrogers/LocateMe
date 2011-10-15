@@ -12,12 +12,14 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 
+import com.hackathon.photohunt.GlobalConstants;
 import com.hackathon.photohunt.utility.LocationUtility;
 import com.hackathon.photohunt.utility.SmsUtility;
 
 public class IncomingUpdateService extends Service {
 	
 	public LocationUtility m_locUtil;
+	public String m_currentLocation;
 	public String m_destPhoneNumber;
 	public String mName;
 	
@@ -34,9 +36,7 @@ public class IncomingUpdateService extends Service {
 		mName = extras.getString("name");
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		Editor prefEdit = prefs.edit();
-		prefEdit.putString("destination", destinationLocation);
-		prefEdit.commit();
+		m_currentLocation = prefs.getString(GlobalConstants.SHARED_PREF_DESTINATION_KEY, null);
 		
 		m_locUtil = new LocationUtility(this);
 		m_locUtil.setLocationListener(createNewLocationListener(), 1000 * 30);

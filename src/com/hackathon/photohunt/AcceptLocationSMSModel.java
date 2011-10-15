@@ -56,6 +56,12 @@ public class AcceptLocationSMSModel
 			{
 				mSendLocation = true;
 				
+				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
+				Editor prefEdit = prefs.edit();
+				prefEdit.putString(GlobalConstants.SHARED_PREF_DESTINATION_KEY, LocationUtility.convertLatLongToString(mLocation[0], mLocation[1]));
+				prefEdit.putString(GlobalConstants.SHARED_PREF_PHONE_NUMBER_KEY, mPhoneNumber);
+				prefEdit.commit();
+				
 				startServiceTask();
 				
 //				Intent intent = new Intent(mActivity, MapLocationActivity.class);
@@ -65,12 +71,6 @@ public class AcceptLocationSMSModel
 //				mActivity.startActivity(intent);
 //				String directions="http://maps.google.com/maps?daddr="+mLocation[0]+","+mLocation[1];
 //				intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-				
-				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
-				Editor prefEdit = prefs.edit();
-				prefEdit.putString(GlobalConstants.SHARED_PREF_DESTINATION_KEY, LocationUtility.convertLatLongToString(mLocation[0], mLocation[1]));
-				prefEdit.putString(GlobalConstants.SHARED_PREF_PHONE_NUMBER_KEY, mPhoneNumber);
-				prefEdit.commit();
 				
 				String directions="google.navigation:q=" + mLocation[0] + "," + mLocation[1] + "&mode=w";
 				Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
@@ -88,6 +88,12 @@ public class AcceptLocationSMSModel
 			{
 				mSendLocation = false;
 				
+				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
+				Editor prefEdit = prefs.edit();
+				prefEdit.putString(GlobalConstants.SHARED_PREF_DESTINATION_KEY, LocationUtility.convertLatLongToString(mLocation[0], mLocation[1]));
+				prefEdit.putString(GlobalConstants.SHARED_PREF_PHONE_NUMBER_KEY, mPhoneNumber);
+				prefEdit.commit();
+				
 				startServiceTask();
 				
 //				Intent intent = new Intent(mActivity, MapLocationActivity.class);
@@ -97,12 +103,6 @@ public class AcceptLocationSMSModel
 //				mActivity.startActivity(intent);
 //				String directions="http://maps.google.com/maps?daddr="+mLocation[0]+","+mLocation[1];
 //				intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-				
-				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
-				Editor prefEdit = prefs.edit();
-				prefEdit.putString(GlobalConstants.SHARED_PREF_DESTINATION_KEY, LocationUtility.convertLatLongToString(mLocation[0], mLocation[1]));
-				prefEdit.putString(GlobalConstants.SHARED_PREF_PHONE_NUMBER_KEY, mPhoneNumber);
-				prefEdit.commit();
 				
 				String directions="google.navigation:q=" + mLocation[0] + "," + mLocation[1] + "&mode=w";
 				Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
@@ -118,7 +118,7 @@ public class AcceptLocationSMSModel
 			@Override
 			public void onClick(View v)
 			{
-				// progress dialouge to ban the user
+				mActivity.startActivity( new Intent(mActivity, HomeActivity.class));
 			}
 			
 		});
