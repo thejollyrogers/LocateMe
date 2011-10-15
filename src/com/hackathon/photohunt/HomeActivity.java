@@ -106,6 +106,7 @@ public class HomeActivity extends Activity {
     @Override
 	protected void onDestroy()
     {
+    	super.onDestroy();
     	if(!m_isRetainingNonConfig)
     	{
     		try
@@ -116,6 +117,5 @@ public class HomeActivity extends Activity {
 			{
 			}
     	}
-    	super.onDestroy();
     }
 }
