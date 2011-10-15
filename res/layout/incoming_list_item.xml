@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="horizontal"
   android:layout_width="fill_parent"
-  android:layout_height="fill_parent">
-  <TextView
-  	android:layout_width="fill_parent"
-  	android:layout_height="fill_parent"
-  	android:layout_weight="1"
-  	android:id="@+id/incoming_name" />
+  android:layout_height="wrap_content"
+  android:background="@drawable/list_item_background"
+  android:paddingLeft="5dp"
+  android:paddingRight="5dp"
+  android:paddingTop="15dp"
+  android:paddingBottom="15dp">
   <TextView
   	android:layout_width="wrap_content"
-  	android:layout_height="fill_parent"
-  	android:layout_weight="0" 
-  	android:id="@+id/incoming_eta" />
+  	android:layout_height="wrap_content"
+  	android:layout_weight=".75"
+  	android:id="@+id/incoming_name"
+  	android:text="Andrew Rogers"
+  	android:textSize="25sp"
+  	android:layout_alignParentLeft="true" />
+  <TextView
+  	android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+  	android:layout_weight=".25" 
+  	android:id="@+id/incoming_eta"
+  	android:text="07:20"
+  	android:textSize="25sp"
+  	android:layout_alignParentRight="true" />
     
-</LinearLayout>
+</RelativeLayout>
