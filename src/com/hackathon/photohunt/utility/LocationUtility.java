@@ -20,7 +20,7 @@ public class LocationUtility
 		m_manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		m_locationListener = createNewLocationListener();
 		m_location = m_manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		startListening();
+		startListening(0);
 	}
 	
 	/**
@@ -46,9 +46,9 @@ public class LocationUtility
 		return latitude + "," + longitude;
 	}
 	
-	public void startListening()
+	public void startListening(int minTime)
 	{
-		m_manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, m_locationListener);
+		m_manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, 0, m_locationListener);
 	}
 	
 	public static double[] convertStringToLatLong(String str)
@@ -98,11 +98,11 @@ public class LocationUtility
 		m_location = location;
 	}
 	
-	public void setLocationListener(LocationListener listener)
+	public void setLocationListener(LocationListener listener, int minTime)
 	{
 		stopListening();
 		m_locationListener = listener;
-		startListening();
+		startListening(minTime);
 	}
 
 	/** Determines whether one Location reading is better than the current Location fix
