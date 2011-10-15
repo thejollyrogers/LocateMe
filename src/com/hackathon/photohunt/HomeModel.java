@@ -49,7 +49,8 @@ public class HomeModel
 			@Override
 			public void onClick(View v)
 			{
-				// launch incoming activity
+				Intent intent = new Intent(m_activity, IncomingList.class);
+				m_activity.startActivity(intent);
 			}
 			
 		});
