@@ -4,6 +4,7 @@ import com.hackathon.photohunt.utility.IncomingDBAdapter;
 import com.hackathon.photohunt.utility.LocationUtility;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -33,7 +34,32 @@ public class ParseLocationUpdateTextTask extends
 	{
 		IncomingDBAdapter mDbHelper = new IncomingDBAdapter(mContext);
 		mDbHelper.open();
-		mDbHelper.createEntry(mName, mPhoneNumber, mCoordinates, null);
+		Cursor cur = mDbHelper.fetchAllEntries();
+		
+		if(cur != null)
+		{
+			String phone = null;
+			int rowid = -1;
+			while(!cur.isAfterLast() && phone != mPhoneNumber)
+			{
+				phone = cur.getString(1);
+				rowid = cur.getInt(0);
+				cur.moveToNext();
+			}
+			if(mPhoneNumber == phone)
+			{
+				mDbHelper.updateEntry(rowid, mCoordinates, null);
+			}
+			else
+			{
+				Log.d("FUCK!!!!" , "Shit isn't working!!!");
+			}
+		}
+		else
+		{
+			mDbHelper.createEntry(mPhoneNumber, mName , mCoordinates, null);
+		}
+		
 		return null;
 	}
 	
