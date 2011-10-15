@@ -1,32 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 	<TextView 
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:text="@string/accept_sms_text" />
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal">
-		<Button 
-			android:id="@+id/accept_and_allow_button"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:text="@string/accept_and_allow" />
-		<Button 
-			android:id="@+id/accept_only_button"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:text="@string/accept_only" />
-	</LinearLayout>
-	<Button 
-		android:id="@+id/decline_button"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/decline" />
-</LinearLayout>
+		android:text="@string/accept_sms_text"
+		android:id="@+id/accept_sms_text_view" 
+		android:layout_marginLeft="10dp"
+		 android:layout_marginBottom="10dp" 
+		 android:layout_marginRight="10dp" 
+		 android:layout_marginTop="10dp" 
+		 android:textSize="18sp"
+		 android:layout_alignParentTop="true"
+		 android:layout_centerHorizontal="true"/>
+	<Button android:id="@+id/accept_only_button" android:layout_height="wrap_content" android:text="@string/accept_only" android:layout_width="wrap_content" android:layout_below="@+id/accept_sms_text_view" android:layout_centerHorizontal="true"></Button>
+	<Button android:id="@+id/accept_and_allow_button" android:layout_height="wrap_content" android:text="@string/accept_and_allow" android:layout_width="wrap_content" android:layout_below="@+id/accept_only_button" android:layout_centerHorizontal="true" android:layout_marginTop="20dp"></Button>
+	<Button android:id="@+id/decline_button" android:layout_height="wrap_content" android:text="@string/decline" android:layout_width="wrap_content" android:layout_below="@+id/accept_and_allow_button" android:layout_centerHorizontal="true" android:layout_marginTop="19dp"></Button>
+</RelativeLayout>

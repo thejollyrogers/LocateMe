@@ -13,6 +13,8 @@ public class AcceptLocationSMSActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.accept_location_sms_layout);
         
+        Bundle extras = getIntent().getExtras();
+
         mModel = (AcceptLocationSMSModel) getLastNonConfigurationInstance();
         if(mModel != null)
         {
@@ -21,7 +23,9 @@ public class AcceptLocationSMSActivity extends Activity {
         }
         else
         {
-        	mModel = new AcceptLocationSMSModel(this);
+        	String phoneNumber = extras.getString("phoneNumber");
+        	String location = extras.getString("location");
+        	mModel = new AcceptLocationSMSModel(this, phoneNumber, location);
         }
     }
     
