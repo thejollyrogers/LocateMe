@@ -1,5 +1,7 @@
 package com.hackathon.photohunt;
 
+import java.io.IOException;
+
 import com.hackathon.photohunt.utility.SmsUtility;
 
 import android.app.Activity;
@@ -17,6 +19,7 @@ public class HomeActivity extends Activity {
 	public static final int CONTACT_RESULT = 0;
 	
 	private HomeModel m_model;
+	private boolean m_isRetainingNonConfig;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class HomeActivity extends Activity {
     @Override
     public HomeModel onRetainNonConfigurationInstance() 
     {
+    	m_isRetainingNonConfig = true;
         m_model.releaseViewsFromActivity();
         return m_model;
     }
@@ -91,5 +95,20 @@ public class HomeActivity extends Activity {
     			// error, make error toast
     			m_model.createErrorToast(R.string.contact_retrieval_error);
     		}
+    }
+    
+    @Override
+	protected void onDestroy()
+    {
+    	if(!m_isRetainingNonConfig)
+    	{
+    		try
+			{
+				m_model.close();
+			}
+			catch (IOException e)
+			{
+			}
+    	}
     }
 }

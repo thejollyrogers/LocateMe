@@ -2,6 +2,7 @@ package com.hackathon.photohunt;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,7 +19,11 @@ public class AcceptLocationSMSModel
 	private Button mDecline;
 	private TextView mAcceptText;
 	private String mPhoneNumber;
+
 	private double[] mLocation;
+	private String mLocationString;
+	private boolean mSendLocation;
+
 	
 	public AcceptLocationSMSModel(Activity activity, String phoneNumber, double[] location)
 	{
@@ -41,6 +46,10 @@ public class AcceptLocationSMSModel
 			@Override
 			public void onClick(View v)
 			{
+				mSendLocation = true;
+				
+				startServiceTask();
+				
 				Intent intent = new Intent(mActivity, MapLocationActivity.class);
 				intent.putExtra(GlobalConstants.PHONE_NUMBER_KEY, mPhoneNumber);
 				intent.putExtra(GlobalConstants.LOCATION_KEY, mLocation);
@@ -56,6 +65,10 @@ public class AcceptLocationSMSModel
 			@Override
 			public void onClick(View v)
 			{
+				mSendLocation = false;
+				
+				startServiceTask();
+				
 				Intent intent = new Intent(mActivity, MapLocationActivity.class);
 				intent.putExtra(GlobalConstants.PHONE_NUMBER_KEY, mPhoneNumber);
 				intent.putExtra(GlobalConstants.LOCATION_KEY, mLocation);
@@ -77,6 +90,13 @@ public class AcceptLocationSMSModel
 		});
 	}
 	
+	public void startServiceTask()
+	{
+		StartServiceTask serviceTask = new StartServiceTask();
+		String[] params = {mPhoneNumber, mLocationString};
+		serviceTask.execute(params);
+	}
+	
 	public void releaseViewsFromActivity()
 	{
 		mAcceptAndAllow = null;
@@ -90,5 +110,19 @@ public class AcceptLocationSMSModel
 	{
 		mActivity = activity;
 	}
+	
+	public class StartServiceTask extends AsyncTask<String, Void, Void>
+	{
 
+		@Override
+		protected Void doInBackground(String... params)
+		{
+			Intent intent = new Intent();
+			intent.putExtra("phoneNumber", mPhoneNumber);
+			intent.putExtra("location", mLocationString);
+			mActivity.startService(intent);
+			return null;
+		}
+		
+	}
 }
