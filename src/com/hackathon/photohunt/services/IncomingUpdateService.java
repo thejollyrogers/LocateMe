@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.hackathon.photohunt.GlobalConstants;
 import com.hackathon.photohunt.utility.LocationUtility;
@@ -53,7 +54,11 @@ public class IncomingUpdateService extends Service {
 		Location.distanceBetween(loc1.getLatitude(), loc1.getLongitude(),
 				loc2.getLatitude(), loc2.getLongitude(), results);
 		if(results[0] <= 10)
+		{
+			Log.d("important", "service is about to die");
 			this.stopSelf();
+		}
+			
 	}
 	
     public LocationListener createNewLocationListener()
@@ -62,6 +67,7 @@ public class IncomingUpdateService extends Service {
 		{
 		    public void onLocationChanged(Location location) 
 		    {
+		    	Log.d("important", "on location changed in service works");
 		    	inProximity(m_locUtil.getCurrentLocationObject(), location);
 		    	String eta = "-1";
 		    	String loc = LocationUtility.convertLatLongToString(location.getLatitude(), location.getLongitude());
@@ -69,6 +75,7 @@ public class IncomingUpdateService extends Service {
 		         mTelephonyMgr = (TelephonyManager)
 		                 getSystemService(Context.TELEPHONY_SERVICE); 
 		         String myNumber = mTelephonyMgr.getLine1Number();
+		        Log.d("important", "WE are about to be sending location update text!");
 		    	SmsUtility.sendLocationUpdateText(m_destPhoneNumber, myNumber, loc, eta, mName);
 		    	m_count++;
 		    	if (m_count > 45) {

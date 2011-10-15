@@ -35,9 +35,10 @@ public class ParseLocationUpdateTextTask extends
 		IncomingDBAdapter mDbHelper = new IncomingDBAdapter(mContext);
 		mDbHelper.open();
 		Cursor cur = mDbHelper.fetchAllEntries();
-		
+		Log.d("important", "we are about to try the cursor");
 		if(cur != null)
 		{
+			Log.d("important", "the cursor is not equal to null");
 			String phone = null;
 			int rowid = -1;
 			while(!cur.isAfterLast() && phone != mPhoneNumber)
@@ -46,17 +47,19 @@ public class ParseLocationUpdateTextTask extends
 				rowid = cur.getInt(0);
 				cur.moveToNext();
 			}
+			Log.d("important", "after the while loop, phone = " + phone + ", rowid = " + rowid);
 			if(mPhoneNumber == phone)
 			{
 				mDbHelper.updateEntry(rowid, mCoordinates, null);
 			}
 			else
 			{
-				Log.d("FUCK!!!!" , "Shit isn't working!!!");
+				Log.d("important" , "Shit isn't working!!!");
 			}
 		}
 		else
 		{
+			Log.d("important", "creating a new entry");
 			mDbHelper.createEntry(mPhoneNumber, mName , mCoordinates, null);
 		}
 		
