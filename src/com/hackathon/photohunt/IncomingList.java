@@ -2,7 +2,9 @@ package com.hackathon.photohunt;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +13,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import com.hackathon.photohunt.utility.IncomingDBAdapter;
+import com.hackathon.photohunt.utility.LocationUtility;
 
 public class IncomingList extends ListActivity {
 	
@@ -51,17 +54,34 @@ public class IncomingList extends ListActivity {
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        switch(item.getItemId()) {
+        case 1:
+        	mDbHelper.createEntry("Franklin", "1234567888", "47.658169,-122.303624", "");
+        	mDbHelper.createEntry("Andrew", "1234567890", "47.658349,-122.318548", "");
+            return true;
+    }
 
-        return super.onMenuItemSelected(featureId, item);
+    return super.onMenuItemSelected(featureId, item);
     }
     
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-      AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-      alertDialog.setTitle("Item Selected");
-      alertDialog.setMessage("niggas");
-      alertDialog.show();
+    	Cursor c = mDbHelper.fetchEntry(id);
+    	String name = c.getString(2);
+    	String location = c.getString(3);
+    	
+//    	AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+//    	alertDialog.setTitle("Item Selected");
+//    	alertDialog.setMessage(name + " " + location);
+//    	alertDialog.show();
+  
+    	double[] coordinates = LocationUtility.convertStringToLatLong(location);
+    	Intent intent = new Intent(this, MapLocationActivity.class);
+    	intent.setAction(GlobalConstants.INCOMING);
+    	intent.putExtra(GlobalConstants.LOCATION_KEY, coordinates);
+    	intent.putExtra(GlobalConstants.NAME, name);
+    	this.startActivity(intent);
 
-      super.onListItemClick(l, v, position, id);
+    	super.onListItemClick(l, v, position, id);
     }
 }

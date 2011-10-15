@@ -18,6 +18,7 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.hackathon.photohunt.utility.LocationUtility;
 
 public class MapLocationActivity extends MapActivity {
 
@@ -61,7 +62,32 @@ public class MapLocationActivity extends MapActivity {
 			
 			mapOverlays.add(itemizedoverlay);
 		} else {
+			mMapController.setZoom(16);
+			Bundle extras = getIntent().getExtras();
+			String name = extras.getString(GlobalConstants.NAME);
+			mLocation = extras.getDoubleArray(GlobalConstants.LOCATION_KEY);
 			
+			List<Overlay> mapOverlays = mMapView.getOverlays();
+			Drawable drawable = this.getResources().getDrawable(R.drawable.icon);
+			HelloItemizedOverlay itemizedoverlay = new HelloItemizedOverlay(drawable,this);
+	//		GeoPoint point = new GeoPoint(30443769,-91158458);
+	//		Log.d("FRANKLIN", "" + mLocation[0] + ", " + mLocation[1]);
+			
+			GeoPoint point = new GeoPoint((int)(mLocation[0]*FACTOR), (int)(mLocation[1]*FACTOR));
+			OverlayItem overlayitem = new OverlayItem(point, name + "'s location", "");
+			
+//			LocationUtility lu = new LocationUtility(this);
+//			String myLocation = lu.getCurrentLocation();
+			double[] myCoordinates = LocationUtility.convertStringToLatLong("47.653377,-122.305464");
+			GeoPoint myPoint = new GeoPoint((int)(myCoordinates[0]*FACTOR), (int)(myCoordinates[1]*FACTOR));
+			OverlayItem myOverlayItem = new OverlayItem(myPoint, "My location", "");
+			
+			mMapController.animateTo(myPoint);
+			
+			itemizedoverlay.addOverlay(overlayitem);
+			itemizedoverlay.addOverlay(myOverlayItem);
+			
+			mapOverlays.add(itemizedoverlay);
 		}
 	}
 	
