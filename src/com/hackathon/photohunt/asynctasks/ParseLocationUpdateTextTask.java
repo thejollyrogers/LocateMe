@@ -16,6 +16,7 @@ public class ParseLocationUpdateTextTask extends
 	private String mName;
 	private String mPhoneNumber;
 	private String mCoordinates;
+	
 	public ParseLocationUpdateTextTask(Context context, String data)
 	{
 		mContext = context;
@@ -26,6 +27,7 @@ public class ParseLocationUpdateTextTask extends
 		mCoordinates = dataArray[2];
 		mName = dataArray[3];
 	}
+	
 	@Override
 	protected Void doInBackground(Void... params)
 	{

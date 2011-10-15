@@ -43,11 +43,24 @@ public class IncomingUpdateService extends Service {
 		return Service.START_STICKY;
 	}
     
+	public void inProximity(Location loc1, Location loc2)
+	{
+		if(loc1 == null)
+			return;
+		float[] results = new float[3];
+		Location.distanceBetween(loc1.getLatitude(), loc1.getLongitude(),
+				loc2.getLatitude(), loc2.getLongitude(), results);
+		if(results[0] <= 10)
+			this.stopSelf();
+	}
+	
     public LocationListener createNewLocationListener()
 	{
 		return new LocationListener() 
 		{
-		    public void onLocationChanged(Location location) {
+		    public void onLocationChanged(Location location) 
+		    {
+		    	inProximity(m_locUtil.getCurrentLocationObject(), location);
 		    	String eta = "-1";
 		    	String loc = LocationUtility.convertLatLongToString(location.getLatitude(), location.getLongitude());
 		    	TelephonyManager mTelephonyMgr;

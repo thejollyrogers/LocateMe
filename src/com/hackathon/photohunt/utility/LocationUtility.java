@@ -39,6 +39,11 @@ public class LocationUtility
 		}
 	}
 	
+	public Location getCurrentLocationObject()
+	{
+		return m_location;
+	}
+	
 	public static String convertLatLongToString(double lati, double longi)
 	{
 		String latitude = Location.convert(lati, Location.FORMAT_SECONDS);
