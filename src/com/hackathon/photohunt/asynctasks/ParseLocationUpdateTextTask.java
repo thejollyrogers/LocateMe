@@ -54,7 +54,8 @@ public class ParseLocationUpdateTextTask extends
 			}
 			else
 			{
-				Log.d("important" , "Shit isn't working!!!");
+				Log.d("important", "creating a new entry");
+				mDbHelper.createEntry(mPhoneNumber, mName , mCoordinates, null);
 			}
 		}
 		else

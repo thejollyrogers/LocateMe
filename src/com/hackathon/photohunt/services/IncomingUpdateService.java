@@ -42,7 +42,7 @@ public class IncomingUpdateService extends Service {
 		m_currentLocation = prefs.getString(GlobalConstants.SHARED_PREF_DESTINATION_KEY, null);
 		
 		m_locUtil = new LocationUtility(this);
-		m_locUtil.setLocationListener(createNewLocationListener(), 1000 * 10);
+		m_locUtil.setLocationListener(createNewLocationListener(), 1000 * 20);
 		return Service.START_STICKY;
 	}
     
@@ -78,7 +78,7 @@ public class IncomingUpdateService extends Service {
 		        Log.d("important", "WE are about to be sending location update text!");
 		    	SmsUtility.sendLocationUpdateText(m_destPhoneNumber, myNumber, loc, eta, mName);
 		    	m_count++;
-		    	if (m_count > 20) {
+		    	if (m_count > 10) {
 		    		stopSelf();
 		    	}
 		    }
