@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -73,8 +74,16 @@ public class HomeActivity extends Activity {
 	    	 		 	        pCur.close();
 	    	 	    }
     	        }
+    		    String location = m_model.getCurrentLocation();
+    		    if(location != null)
+    		    {
+    		    	SmsUtility.sendLocationText(phoneNumber, m_model.getCurrentLocation());
+    		    }
+    		    else
+    		    {
+    		    	m_model.createErrorToast(R.string.no_location);
+    		    }
     		    
-    		    SmsUtility.sendLocationText(phoneNumber, m_model.getCurrentLocation());
     	 	}
     		}
     		else
