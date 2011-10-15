@@ -78,7 +78,7 @@ public class IncomingUpdateService extends Service {
 		        Log.d("important", "WE are about to be sending location update text!");
 		    	SmsUtility.sendLocationUpdateText(m_destPhoneNumber, myNumber, loc, eta, mName);
 		    	m_count++;
-		    	if (m_count > 45) {
+		    	if (m_count > 20) {
 		    		stopSelf();
 		    	}
 		    }
