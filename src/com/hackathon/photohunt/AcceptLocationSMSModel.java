@@ -1,5 +1,7 @@
 package com.hackathon.photohunt;
 
+import com.hackathon.photohunt.services.IncomingUpdateService;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -130,6 +132,7 @@ public class AcceptLocationSMSModel
 		protected Void doInBackground(String... params)
 		{
 			Intent intent = new Intent();
+			intent.setAction("com.hackathon.photohunt.services.IncomingUpdateService");
 			intent.putExtra("phoneNumber", mPhoneNumber);
 			intent.putExtra("location", mLocationString);
 			mActivity.startService(intent);

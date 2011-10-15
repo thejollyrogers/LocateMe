@@ -116,5 +116,6 @@ public class HomeActivity extends Activity {
 			{
 			}
     	}
+    	super.onDestroy();
     }
 }
