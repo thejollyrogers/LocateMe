@@ -38,25 +38,8 @@ public class ParseLocationUpdateTextTask extends
 		Log.d("important", "we are about to try the cursor");
 		if(cur != null)
 		{
-			Log.d("important", "the cursor is not equal to null");
-			String phone = null;
-			int rowid = -1;
-			while(!cur.isAfterLast() && phone != mPhoneNumber)
-			{
-				phone = cur.getString(1);
-				rowid = cur.getInt(0);
-				cur.moveToNext();
-			}
-			Log.d("important", "after the while loop, phone = " + phone + ", rowid = " + rowid);
-			if(mPhoneNumber == phone)
-			{
-				mDbHelper.updateEntry(rowid, mCoordinates, null);
-			}
-			else
-			{
 				Log.d("important", "creating a new entry");
 				mDbHelper.createEntry(mPhoneNumber, mName , mCoordinates, null);
-			}
 		}
 		else
 		{
