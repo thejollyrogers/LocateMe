@@ -35,6 +35,7 @@ public class CreateNotificationTask extends AsyncTask<Void, Void, Void> {
 	protected Void doInBackground(Void... arg0) {
 		NotificationManager nm = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		Notification n = new Notification(R.drawable.icon, mPhoneNumber + " sent a location", System.currentTimeMillis());
+		n.flags |= Notification.FLAG_AUTO_CANCEL;
 		Intent i = new Intent(mContext, AcceptLocationSMSActivity.class);
 		i.putExtra(GlobalConstants.PHONE_NUMBER_KEY, mPhoneNumber);
 		i.putExtra(GlobalConstants.LOCATION_KEY, mCoordinates);
