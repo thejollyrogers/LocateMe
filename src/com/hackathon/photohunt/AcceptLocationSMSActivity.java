@@ -23,8 +23,8 @@ public class AcceptLocationSMSActivity extends Activity {
         }
         else
         {
-        	String phoneNumber = extras.getString("phoneNumber");
-        	String location = extras.getString("location");
+        	String phoneNumber = extras.getString(GlobalConstants.PHONE_NUMBER_KEY);
+        	double[] location = extras.getDoubleArray(GlobalConstants.LOCATION_KEY);
         	mModel = new AcceptLocationSMSModel(this, phoneNumber, location);
         }
     }

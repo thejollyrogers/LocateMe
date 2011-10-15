@@ -18,9 +18,9 @@ public class AcceptLocationSMSModel
 	private Button mDecline;
 	private TextView mAcceptText;
 	private String mPhoneNumber;
-	private String mLocation;
+	private double[] mLocation;
 	
-	public AcceptLocationSMSModel(Activity activity, String phoneNumber, String location)
+	public AcceptLocationSMSModel(Activity activity, String phoneNumber, double[] location)
 	{
 		mActivity = activity;
 		mPhoneNumber = phoneNumber;
@@ -42,9 +42,9 @@ public class AcceptLocationSMSModel
 			public void onClick(View v)
 			{
 				Intent intent = new Intent(mActivity, MapLocationActivity.class);
-				intent.putExtra("phoneNumber", mPhoneNumber);
-				intent.putExtra("location", mLocation);
-				intent.putExtra("sendLocation", true);
+				intent.putExtra(GlobalConstants.PHONE_NUMBER_KEY, mPhoneNumber);
+				intent.putExtra(GlobalConstants.LOCATION_KEY, mLocation);
+				intent.putExtra(GlobalConstants.IS_LOCATION_UPDATING_KEY, true);
 				mActivity.startActivity(intent);
 			}
 			
@@ -57,9 +57,9 @@ public class AcceptLocationSMSModel
 			public void onClick(View v)
 			{
 				Intent intent = new Intent(mActivity, MapLocationActivity.class);
-				intent.putExtra("phoneNumber", mPhoneNumber);
-				intent.putExtra("location", mLocation);
-				intent.putExtra("sendLocation", true);
+				intent.putExtra(GlobalConstants.PHONE_NUMBER_KEY, mPhoneNumber);
+				intent.putExtra(GlobalConstants.LOCATION_KEY, mLocation);
+				intent.putExtra(GlobalConstants.IS_LOCATION_UPDATING_KEY, false);
 				mActivity.startActivity(intent);
 			}
 			

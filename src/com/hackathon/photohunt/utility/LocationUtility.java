@@ -55,8 +55,8 @@ public class LocationUtility
 	{
 		String[] strArray = str.split(",");
 		double[] coordinates = new double[2];
-		coordinates[0] = Double.parseDouble(strArray[0]);
-		coordinates[1] = Double.parseDouble(strArray[1]);
+		coordinates[0] = Location.convert(strArray[0]);
+		coordinates[1] = Location.convert(strArray[1]);
 		return coordinates;
 	}
 	
@@ -71,7 +71,7 @@ public class LocationUtility
 		{
 		    public void onLocationChanged(Location location) {
 		        // Called when a new location is found by the network location provider.
-		    	if(isBetterLocation(m_location, location))
+		    	if(isBetterLocation(location, m_location))
 		    		setLocation(location);
 		    }
 
