@@ -56,7 +56,7 @@ public class HomeModel implements Closeable
 			@Override
 			public void onClick(View v)
 			{
-				Intent intent = new Intent(m_activity, IncomingList.class);
+				Intent intent = new Intent(m_activity, IncomingListActivity.class);
 				m_activity.startActivity(intent);
 			}
 			

@@ -15,7 +15,7 @@ import android.widget.SimpleCursorAdapter;
 import com.hackathon.photohunt.utility.IncomingDBAdapter;
 import com.hackathon.photohunt.utility.LocationUtility;
 
-public class IncomingList extends ListActivity {
+public class IncomingListActivity extends ListActivity {
 	
 	private IncomingDBAdapter mDbHelper;
 	

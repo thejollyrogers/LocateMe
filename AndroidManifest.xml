@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".IncomingList"></activity>
+        <activity android:name=".IncomingListActivity"></activity>
 
         
         <activity android:name=".AcceptLocationSMSActivity"
