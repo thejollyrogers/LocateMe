@@ -159,6 +159,5 @@ public class AcceptLocationSMSModel
 			mActivity.startService(intent);
 			return null;
 		}
-		
 	}
 }

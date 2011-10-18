@@ -41,21 +41,16 @@ public class SMSReceiver extends BroadcastReceiver {
                 }
                 if(firstMsg.startsWith(GlobalConstants.SMS_APP_IDENTIFIER))
                 {
-                	Log.d("important", "mistaking for sms app identifier");
                 	CreateNotificationTask c = new CreateNotificationTask(context, str);
                 	c.execute();
                 }
                 else if(firstMsg.startsWith(GlobalConstants.SMS_APP_UPDATE_IDENTIFIER))
                 {
-                	Log.d("important", "we realize it is an update message!!");
                 	ParseLocationUpdateTextTask task = new ParseLocationUpdateTextTask(context, str);
                 	task.execute();
                 }
             	
             }
-
-            //---display the new SMS message---
-//            Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
         }        
 	}
 
