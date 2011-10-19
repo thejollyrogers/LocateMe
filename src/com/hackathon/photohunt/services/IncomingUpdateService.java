@@ -55,7 +55,6 @@ public class IncomingUpdateService extends Service {
 				loc2.getLatitude(), loc2.getLongitude(), results);
 		if(results[0] <= 10)
 		{
-			Log.d("important", "service is about to die");
 			this.stopSelf();
 		}
 			

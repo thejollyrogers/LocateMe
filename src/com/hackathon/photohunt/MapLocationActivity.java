@@ -1,93 +1,37 @@
 package com.hackathon.photohunt;
 
-import java.util.List;
+import java.io.IOException;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapController;
-import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
-import com.hackathon.photohunt.utility.LocationUtility;
 
 public class MapLocationActivity extends MapActivity {
 
-	private static final double FACTOR = 1E6;
-	
-	private LinearLayout mLinearLayout;
-	private MapView mMapView;
-	private MapController mMapController;
-	private String mPhoneNumber;
 	private double[] mLocation;
-	private TextView mPhoneNumberTitle;
+	private MapLocationModel mModel;
+	private boolean retainingNonConfigurationInstance;
 	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map_location_layout);
-		mMapView = (MapView) findViewById(R.id.mapview);
-		mMapView.setBuiltInZoomControls(true);
-		mMapController = mMapView.getController();
-		String action = getIntent().getAction();
 		
-		if (action.equals(GlobalConstants.OUTGOING)) {
-			mMapController.setZoom(18);
-			
-			Bundle extras = getIntent().getExtras();
-			mPhoneNumber = extras.getString(GlobalConstants.PHONE_NUMBER_KEY);
-			mLocation = extras.getDoubleArray(GlobalConstants.LOCATION_KEY);
-			
-			List<Overlay> mapOverlays = mMapView.getOverlays();
-			Drawable drawable = this.getResources().getDrawable(R.drawable.icon);
-			HelloItemizedOverlay itemizedoverlay = new HelloItemizedOverlay(drawable,this);
-	//		GeoPoint point = new GeoPoint(30443769,-91158458);
-	//		Log.d("FRANKLIN", "" + mLocation[0] + ", " + mLocation[1]);
-			
-			GeoPoint point = new GeoPoint((int)(mLocation[0]*FACTOR), (int)(mLocation[1]*FACTOR));
-			OverlayItem overlayitem = new OverlayItem(point, mPhoneNumber + "'s location", "Go here!");
-			
-			mMapController.animateTo(point);
-			
-			itemizedoverlay.addOverlay(overlayitem);
-			
-			mapOverlays.add(itemizedoverlay);
-		} else {
-			mMapController.setZoom(16);
-			Bundle extras = getIntent().getExtras();
-			String name = extras.getString(GlobalConstants.NAME);
-			mLocation = extras.getDoubleArray(GlobalConstants.LOCATION_KEY);
-			
-			List<Overlay> mapOverlays = mMapView.getOverlays();
-			Drawable drawable = this.getResources().getDrawable(R.drawable.icon);
-			HelloItemizedOverlay itemizedoverlay = new HelloItemizedOverlay(drawable,this);
-	//		GeoPoint point = new GeoPoint(30443769,-91158458);
-	//		Log.d("FRANKLIN", "" + mLocation[0] + ", " + mLocation[1]);
-			
-			GeoPoint point = new GeoPoint((int)(mLocation[0]*FACTOR), (int)(mLocation[1]*FACTOR));
-			OverlayItem overlayitem = new OverlayItem(point, name + "'s location", "");
-			
-//			LocationUtility lu = new LocationUtility(this);
-//			String myLocation = lu.getCurrentLocation();
-			double[] myCoordinates = LocationUtility.convertStringToLatLong("47.653377,-122.305464");
-			GeoPoint myPoint = new GeoPoint((int)(myCoordinates[0]*FACTOR), (int)(myCoordinates[1]*FACTOR));
-			OverlayItem myOverlayItem = new OverlayItem(myPoint, "My location", "");
-			
-			mMapController.animateTo(myPoint);
-			
-			itemizedoverlay.addOverlay(overlayitem);
-			itemizedoverlay.addOverlay(myOverlayItem);
-			
-			mapOverlays.add(itemizedoverlay);
+		String action = getIntent().getAction();
+		Bundle extras = getIntent().getExtras();
+		
+		mModel = (MapLocationModel) getLastNonConfigurationInstance();
+		if(mModel == null)
+		{
+			mModel = new MapLocationModel(this, action, extras);
+		}
+		else
+		{
+			mModel.reset(this);
 		}
 	}
 	
@@ -108,7 +52,8 @@ public class MapLocationActivity extends MapActivity {
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         switch(item.getItemId()) {
             case 1:
-				String directions="google.navigation:q=" + mLocation[0] + "," + mLocation[1] + "&mode=w";
+            	double[] location = mModel.getLocationArray();
+				String directions="google.navigation:q=" + location[0] + "," + location[1] + "&mode=w";
 				Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
 				intent.setData(Uri.parse(directions));
 				startActivity(intent);
@@ -116,6 +61,36 @@ public class MapLocationActivity extends MapActivity {
         }
 
         return super.onMenuItemSelected(featureId, item);
+    }
+    
+    @Override
+    public MapLocationModel onRetainNonConfigurationInstance() 
+    {
+    	retainingNonConfigurationInstance = true;
+        mModel.releaseViewsFromActivity();
+        return mModel;
+    }
+    
+    @Override
+    public void onDestroy()
+    {
+    	super.onDestroy();
+    	if(retainingNonConfigurationInstance)
+    	{
+    		mModel.releaseViewsFromActivity();
+    	}
+    	else
+    	{
+    		try
+			{
+				mModel.close();
+			}
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
     }
 
 

@@ -7,12 +7,12 @@ import android.graphics.drawable.Drawable;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
 
-public class HelloItemizedOverlay extends ItemizedOverlay<OverlayItem>
+public class MapItemizedOverlay extends ItemizedOverlay<OverlayItem>
 {
 	private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
 	private Context mContext;
 
-	public HelloItemizedOverlay(Drawable defaultMarker, Context context)
+	public MapItemizedOverlay(Drawable defaultMarker, Context context)
 	{
 		super(boundCenterBottom(defaultMarker));
 		mContext = context;

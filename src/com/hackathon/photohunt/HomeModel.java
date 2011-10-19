@@ -69,9 +69,11 @@ public class HomeModel implements Closeable
 			public void onClick(View v)
 			{
 				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(m_activity);
-				if (prefs != null) {
-					String location = prefs.getString(GlobalConstants.SHARED_PREF_DESTINATION_KEY, null);
-					String phoneNumber = prefs.getString(GlobalConstants.SHARED_PREF_PHONE_NUMBER_KEY, null);
+				//if (prefs != null) {
+					// String location = prefs.getString(GlobalConstants.SHARED_PREF_DESTINATION_KEY, null);
+					// String phoneNumber = prefs.getString(GlobalConstants.SHARED_PREF_PHONE_NUMBER_KEY, null);
+					String location = getCurrentLocation();
+					String phoneNumber = "206-465-1374";
 					if (location != null) {
 						double[] coordinates = LocationUtility.convertStringToLatLong(location);
 						Intent intent = new Intent(m_activity, MapLocationActivity.class);
@@ -82,9 +84,9 @@ public class HomeModel implements Closeable
 					} else {
 						createErrorToast(R.string.no_outgoing);
 					}
-				} else {
-					createErrorToast(R.string.no_outgoing);
-				}
+				//} else {
+				//	createErrorToast(R.string.no_outgoing);
+				//}
 			}
 			
 		});
