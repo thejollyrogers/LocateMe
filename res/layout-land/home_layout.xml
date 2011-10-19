@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#00008B"
+    >
+    
+    <RelativeLayout 
+    	android:layout_height="wrap_content"
+    	android:id="@+id/send_button"
+    	android:background="@drawable/background_gradient_drawable" 
+    	android:clickable="true" 
+    	android:focusable="true"
+    	android:layout_marginTop="20dp"
+    	android:layout_marginBottom="20dp"
+    	android:layout_toLeftOf="@+id/incoming_button" 
+    	android:layout_centerVertical="true"
+    	android:padding="4dp" android:layout_width="150dp" android:layout_marginLeft="20dp" android:layout_marginRight="20dp">
+    	<TextView android:textColor="#000000" 
+    		android:layout_height="wrap_content" 
+    		android:text="SEND" 
+    		android:layout_width="wrap_content" 
+    		android:layout_alignParentTop="true" 
+    		android:layout_centerHorizontal="true" 
+    		android:id="@+id/textView1" android:textSize="20sp"></TextView>
+    	<ImageView android:id="@+id/crosshairs" 
+    	android:src="@drawable/crosshairs" 
+    	android:layout_width="75dp" 
+    	android:layout_height="75dp" 
+    	android:layout_below="@+id/textView1" 
+    	android:layout_centerHorizontal="true">
+    	</ImageView>
+    
+    </RelativeLayout>
+    
+    <RelativeLayout 
+    	android:layout_height="wrap_content"
+    	android:background="@drawable/background_gradient_drawable_upsidedown" 
+    	android:clickable="true" 
+    	android:id="@+id/incoming_button" 
+    	android:focusable="true"
+    	android:layout_centerInParent="true"
+    	android:padding="4dp" android:layout_width="150dp" android:layout_marginLeft="20dp" android:layout_marginRight="20dp">
+    	<TextView 
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:textColor="#000000" 
+    		android:text="@string/incoming"
+    		android:id="@+id/incoming_text"
+    		android:layout_centerHorizontal="true" android:textSize="20sp">
+    	</TextView>
+    	<ImageView 
+    		android:id="@+id/left_arrow" 
+    		android:src="@drawable/incoming_arrow" 
+    		android:layout_width="75dp" 
+    		android:layout_height="75dp" 
+    		android:scaleType="fitXY"  
+    		android:layout_centerHorizontal="true"
+    		android:layout_below="@+id/incoming_text">
+    		</ImageView>
+    
+    </RelativeLayout>
+    
+    <RelativeLayout 
+    	android:layout_height="wrap_content"
+    	android:background="@drawable/background_gradient_drawable" 
+    	android:clickable="true" 
+    	android:id="@+id/outgoing_button" 
+    	android:focusable="true"
+    	android:layout_marginTop="20dp"
+    	android:layout_marginBottom="20dp"
+    	android:layout_toRightOf="@+id/incoming_button"
+    	android:layout_centerVertical="true"
+    	android:padding="4dp" android:layout_width="150dp" android:layout_marginLeft="20dp" android:layout_marginRight="20dp">
+    	<TextView 
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:textColor="#000000" 
+    		android:layout_centerHorizontal="true"
+    		android:layout_toLeftOf="@+id/crosshairs" 
+    		android:text="@string/outgoing"
+    		android:id="@+id/outgoing_text" android:textSize="20sp">
+    	</TextView>
+    	<ImageView 
+	    	android:id="@+id/right_arrow" 
+	    	android:scaleType="fitXY" 
+	    	android:layout_height="75dp" 
+	    	android:src="@drawable/outgoing_arrow" 
+	    	android:layout_width="75dp"
+	    	android:layout_below="@+id/outgoing_text"
+	    	android:layout_centerHorizontal="true">
+    	</ImageView>
+    
+    </RelativeLayout>
+</RelativeLayout>
