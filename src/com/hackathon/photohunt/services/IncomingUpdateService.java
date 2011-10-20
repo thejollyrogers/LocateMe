@@ -22,6 +22,7 @@ public class IncomingUpdateService extends Service {
 	public String m_currentLocation;
 	public String m_destPhoneNumber;
 	public String mName;
+	public int m_count;
 	
 	@Override
 	public void onCreate() {
@@ -34,6 +35,7 @@ public class IncomingUpdateService extends Service {
 		m_destPhoneNumber = extras.getString("phoneNumber");
 		String destinationLocation = extras.getString("location");
 		mName = extras.getString("name");
+		m_count = 0;
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		m_currentLocation = prefs.getString(GlobalConstants.SHARED_PREF_DESTINATION_KEY, null);
@@ -68,6 +70,10 @@ public class IncomingUpdateService extends Service {
 		                 getSystemService(Context.TELEPHONY_SERVICE); 
 		         String myNumber = mTelephonyMgr.getLine1Number();
 		    	SmsUtility.sendLocationUpdateText(m_destPhoneNumber, myNumber, loc, eta, mName);
+		    	m_count++;
+		    	if (m_count > 45) {
+		    		stopSelf();
+		    	}
 		    }
 
 		    public void onProviderEnabled(String provider) 
