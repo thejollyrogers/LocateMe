@@ -71,7 +71,7 @@ public class IncomingUpdateService extends Service {
 		         String myNumber = mTelephonyMgr.getLine1Number();
 		    	SmsUtility.sendLocationUpdateText(m_destPhoneNumber, myNumber, loc, eta, mName);
 		    	m_count++;
-		    	if (m_count > 45) {
+		    	if (m_count > 20) {
 		    		stopSelf();
 		    	}
 		    }
