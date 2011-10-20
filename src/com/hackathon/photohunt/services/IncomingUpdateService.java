@@ -1,12 +1,14 @@
 package com.hackathon.photohunt.services;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 
 import com.hackathon.photohunt.utility.LocationUtility;
 import com.hackathon.photohunt.utility.SmsUtility;
@@ -26,9 +28,13 @@ public class IncomingUpdateService extends Service {
 		Bundle extras = intent.getExtras();
 		m_destPhoneNumber = extras.getString("phoneNumber");
 		String destinationLocation = extras.getString("location");
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		Editor prefEdit = prefs.edit();
+		prefEdit.putString("destination", destinationLocation);
+		prefEdit.commit();
 		
 		m_locUtil = new LocationUtility(this);
-		m_locUtil.setLocationListener(createNewLocationListener(), 1000 * 60);
+		m_locUtil.setLocationListener(createNewLocationListener(), 1000 * 5);
 		return Service.START_STICKY;
 	}
     
