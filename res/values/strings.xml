@@ -5,4 +5,5 @@
     <string name="send">SEND</string>
     <string name="incoming">INCOMING</string>
     <string name="outgoing">OUTGOING</string>
+    <string name="no_incoming">No incoming friends.</string>
 </resources>
