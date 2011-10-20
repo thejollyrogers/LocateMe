@@ -39,7 +39,7 @@ public class IncomingUpdateService extends Service {
 		prefEdit.commit();
 		
 		m_locUtil = new LocationUtility(this);
-		m_locUtil.setLocationListener(createNewLocationListener(), 1000 * 30);
+		m_locUtil.setLocationListener(createNewLocationListener(), 1000 * 10);
 		return Service.START_STICKY;
 	}
     

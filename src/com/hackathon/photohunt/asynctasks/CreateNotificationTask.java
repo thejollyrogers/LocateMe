@@ -41,6 +41,7 @@ public class CreateNotificationTask extends AsyncTask<Void, Void, Void> {
 		Intent i = new Intent(mContext, AcceptLocationSMSActivity.class);
 		i.putExtra(GlobalConstants.PHONE_NUMBER_KEY, mPhoneNumber);
 		i.putExtra(GlobalConstants.LOCATION_KEY, mCoordinates);
+		i.putExtra(GlobalConstants.NAME, mName);
 		i.setAction("" + System.currentTimeMillis());
 		PendingIntent intent = PendingIntent.getActivity(mContext, 0, i, 0);
 		n.setLatestEventInfo(mContext, "Location data sent from " + mPhoneNumber, "Coordinates: " 
