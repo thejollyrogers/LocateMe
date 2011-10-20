@@ -88,7 +88,7 @@ public class HomeActivity extends Activity {
     		         mTelephonyMgr = (TelephonyManager)
     		                 getSystemService(Context.TELEPHONY_SERVICE); 
     		         String number = mTelephonyMgr.getLine1Number();
-    		    	SmsUtility.sendLocationText(theirNumber, number, m_model.getCurrentLocation(), name);
+    		    	SmsUtility.sendLocationText(theirNumber, number, location, name);
     		    }
     		    else
     		    {

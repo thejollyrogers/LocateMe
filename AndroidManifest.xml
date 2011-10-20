@@ -30,7 +30,8 @@
         <activity android:name=".IncomingList"></activity>
 
         
-        <activity android:name=".AcceptLocationSMSActivity">
+        <activity android:name=".AcceptLocationSMSActivity"
+        			android:noHistory="true">
         </activity>
         
         <activity android:name=".MapLocationActivity">
