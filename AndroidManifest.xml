@@ -34,6 +34,13 @@
         <activity android:name=".MapLocationActivity">
         </activity>
         
+        <service android:enabled="true" android:name="com.hackathon.photohunt.services.IncomingUpdateService">
+        	<intent-filter>
+        		<action android:name="com.hackathon.photohunt.services.IncomingUpdateService">
+        		</action>
+        	</intent-filter>
+        </service>
+        
 		<receiver android:name="com.hackathon.photohunt.receivers.SMSReceiver">
 			<intent-filter android:priority="100">
 				<action android:name="android.provider.Telephony.SMS_RECEIVED"></action>

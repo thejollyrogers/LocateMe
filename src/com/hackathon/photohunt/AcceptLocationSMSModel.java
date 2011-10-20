@@ -1,5 +1,7 @@
 package com.hackathon.photohunt;
 
+import com.hackathon.photohunt.services.IncomingUpdateService;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -69,11 +71,6 @@ public class AcceptLocationSMSModel
 				
 				startServiceTask();
 				
-				Intent intent = new Intent(mActivity, MapLocationActivity.class);
-				intent.putExtra(GlobalConstants.PHONE_NUMBER_KEY, mPhoneNumber);
-				intent.putExtra(GlobalConstants.LOCATION_KEY, mLocation);
-				intent.putExtra(GlobalConstants.IS_LOCATION_UPDATING_KEY, false);
-				mActivity.startActivity(intent);
 			}
 			
 		});
@@ -118,6 +115,7 @@ public class AcceptLocationSMSModel
 		protected Void doInBackground(String... params)
 		{
 			Intent intent = new Intent();
+			intent.setAction("com.hackathon.photohunt.services.IncomingUpdateService");
 			intent.putExtra("phoneNumber", mPhoneNumber);
 			intent.putExtra("location", mLocationString);
 			mActivity.startService(intent);
