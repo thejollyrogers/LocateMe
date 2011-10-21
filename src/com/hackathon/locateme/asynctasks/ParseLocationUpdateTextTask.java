@@ -1,7 +1,7 @@
-package com.hackathon.photohunt.asynctasks;
+package com.hackathon.locateme.asynctasks;
 
-import com.hackathon.photohunt.utility.IncomingDBAdapter;
-import com.hackathon.photohunt.utility.LocationUtility;
+import com.hackathon.locateme.utility.IncomingDBAdapter;
+import com.hackathon.locateme.utility.LocationUtility;
 
 import android.content.Context;
 import android.database.Cursor;

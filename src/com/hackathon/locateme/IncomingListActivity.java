@@ -1,4 +1,4 @@
-package com.hackathon.photohunt;
+package com.hackathon.locateme;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -12,8 +12,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-import com.hackathon.photohunt.utility.IncomingDBAdapter;
-import com.hackathon.photohunt.utility.LocationUtility;
+import com.hackathon.locateme.utility.IncomingDBAdapter;
+import com.hackathon.locateme.utility.LocationUtility;
+import com.hackathon.photohunt.R;
 
 public class IncomingListActivity extends ListActivity {
 	

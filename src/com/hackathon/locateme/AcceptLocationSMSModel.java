@@ -1,7 +1,8 @@
-package com.hackathon.photohunt;
+package com.hackathon.locateme;
 
-import com.hackathon.photohunt.services.IncomingUpdateService;
-import com.hackathon.photohunt.utility.LocationUtility;
+import com.hackathon.locateme.services.IncomingUpdateService;
+import com.hackathon.locateme.utility.LocationUtility;
+import com.hackathon.photohunt.R;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -152,7 +153,7 @@ public class AcceptLocationSMSModel
 		protected Void doInBackground(String... params)
 		{
 			Intent intent = new Intent();
-			intent.setAction("com.hackathon.photohunt.services.IncomingUpdateService");
+			intent.setAction("com.hackathon.locateme.services.IncomingUpdateService");
 			intent.putExtra("phoneNumber", mPhoneNumber);
 			intent.putExtra("location", mLocationString);
 			intent.putExtra("name", mName);

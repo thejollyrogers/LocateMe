@@ -1,4 +1,4 @@
-package com.hackathon.photohunt.asynctasks;
+package com.hackathon.locateme.asynctasks;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -8,10 +8,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.hackathon.photohunt.AcceptLocationSMSActivity;
-import com.hackathon.photohunt.GlobalConstants;
+import com.hackathon.locateme.AcceptLocationSMSActivity;
+import com.hackathon.locateme.GlobalConstants;
+import com.hackathon.locateme.utility.LocationUtility;
 import com.hackathon.photohunt.R;
-import com.hackathon.photohunt.utility.LocationUtility;
 
 public class CreateNotificationTask extends AsyncTask<Void, Void, Void> {
 	

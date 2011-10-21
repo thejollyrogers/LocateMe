@@ -1,4 +1,4 @@
-package com.hackathon.photohunt;
+package com.hackathon.locateme;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -10,7 +10,8 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
-import com.hackathon.photohunt.utility.LocationUtility;
+import com.hackathon.locateme.utility.LocationUtility;
+import com.hackathon.photohunt.R;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;

@@ -1,4 +1,4 @@
-package com.hackathon.photohunt;
+package com.hackathon.locateme;
 
 import java.util.ArrayList;
 import android.app.AlertDialog;

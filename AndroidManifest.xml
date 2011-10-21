@@ -32,17 +32,18 @@
         			android:noHistory="true">
         </activity>
         
-        <activity android:name=".MapLocationActivity">
+        <activity android:name="com.hackathon.locateme.MapLocationActivity">
         </activity>
         
-        <service android:enabled="true" android:name="com.hackathon.photohunt.services.IncomingUpdateService">
+        <service android:enabled="true" android:name="com.hackathon.locateme.services.IncomingUpdateService">
         	<intent-filter>
-        		<action android:name="com.hackathon.photohunt.services.IncomingUpdateService">
+        		<action android:name="com.hackathon.photohunt.services.IncomingUpdateService"
+        				android:exported="false">
         		</action>
         	</intent-filter>
         </service>
         
-		<receiver android:name="com.hackathon.photohunt.receivers.SMSReceiver">
+		<receiver android:name="com.hackathon.locateme.receivers.SMSReceiver">
 			<intent-filter android:priority="100">
 				<action android:name="android.provider.Telephony.SMS_RECEIVED"></action>
 			</intent-filter>

@@ -1,4 +1,4 @@
-package com.hackathon.photohunt;
+package com.hackathon.locateme;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -15,7 +15,8 @@ import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.hackathon.photohunt.utility.LocationUtility;
+import com.hackathon.locateme.utility.LocationUtility;
+import com.hackathon.photohunt.R;
 
 public class HomeModel implements Closeable
 {

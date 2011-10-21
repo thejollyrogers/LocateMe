@@ -12,4 +12,5 @@
     <string name="decline">Decline</string>
     <string name="contact_retrieval_error">Error retrieving contact information</string>
     <string name="no_location">Failed accessing location data</string>
+    <string name="cancel_sending_data">Click here to stop sending data to </string>
 </resources>

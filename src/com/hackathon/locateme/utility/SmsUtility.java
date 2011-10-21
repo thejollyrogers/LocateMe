@@ -1,6 +1,6 @@
-package com.hackathon.photohunt.utility;
+package com.hackathon.locateme.utility;
 
-import com.hackathon.photohunt.GlobalConstants;
+import com.hackathon.locateme.GlobalConstants;
 
 import android.telephony.SmsManager;
 

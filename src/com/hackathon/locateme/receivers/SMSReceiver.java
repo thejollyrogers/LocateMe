@@ -1,9 +1,9 @@
-package com.hackathon.photohunt.receivers;
+package com.hackathon.locateme.receivers;
 
-import com.hackathon.photohunt.GlobalConstants;
-import com.hackathon.photohunt.asynctasks.CreateNotificationTask;
-import com.hackathon.photohunt.asynctasks.ParseLocationUpdateTextTask;
-import com.hackathon.photohunt.utility.IncomingDBAdapter;
+import com.hackathon.locateme.GlobalConstants;
+import com.hackathon.locateme.asynctasks.CreateNotificationTask;
+import com.hackathon.locateme.asynctasks.ParseLocationUpdateTextTask;
+import com.hackathon.locateme.utility.IncomingDBAdapter;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

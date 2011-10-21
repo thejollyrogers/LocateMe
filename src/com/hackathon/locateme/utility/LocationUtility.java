@@ -1,4 +1,4 @@
-package com.hackathon.photohunt.utility;
+package com.hackathon.locateme.utility;
 
 import android.content.Context;
 import android.location.Location;

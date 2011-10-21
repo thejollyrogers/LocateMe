@@ -6,6 +6,7 @@
     android:background="#00008B"
     >
     
+    
     <RelativeLayout 
     	android:layout_width="220dp"
     	android:layout_height="wrap_content"
@@ -13,8 +14,8 @@
     	android:background="@drawable/background_gradient_drawable" 
     	android:clickable="true" 
     	android:focusable="true"
-    	android:layout_marginTop="20dp"
     	android:layout_marginBottom="20dp"
+    	android:layout_marginTop="20dp"
     	android:layout_above="@+id/incoming_button" 
     	android:layout_centerHorizontal="true"
     	android:padding="4dp">
@@ -73,11 +74,9 @@
     	android:clickable="true" 
     	android:id="@+id/outgoing_button" 
     	android:focusable="true"
-    	android:layout_marginTop="20dp"
-    	android:layout_marginBottom="20dp"
     	android:layout_below="@+id/incoming_button"
     	android:layout_centerHorizontal="true"
-    	android:padding="4dp">
+    	android:padding="4dp" android:layout_marginBottom="10dp" android:layout_marginTop="20dp">
     	<TextView 
     		android:layout_width="wrap_content"
     		android:layout_height="wrap_content"

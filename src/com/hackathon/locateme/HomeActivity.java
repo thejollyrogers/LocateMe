@@ -1,8 +1,9 @@
-package com.hackathon.photohunt;
+package com.hackathon.locateme;
 
 import java.io.IOException;
 
-import com.hackathon.photohunt.utility.SmsUtility;
+import com.hackathon.locateme.utility.SmsUtility;
+import com.hackathon.photohunt.R;
 
 import android.app.Activity;
 import android.content.ContentResolver;

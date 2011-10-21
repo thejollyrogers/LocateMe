@@ -1,4 +1,4 @@
-package com.hackathon.photohunt.services;
+package com.hackathon.locateme.services;
 
 import android.app.Service;
 import android.content.Context;
@@ -13,25 +13,26 @@ import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import com.hackathon.photohunt.GlobalConstants;
-import com.hackathon.photohunt.utility.LocationUtility;
-import com.hackathon.photohunt.utility.SmsUtility;
+import com.hackathon.locateme.GlobalConstants;
+import com.hackathon.locateme.utility.LocationUtility;
+import com.hackathon.locateme.utility.SmsUtility;
 
 public class IncomingUpdateService extends Service {
-	
+
 	public LocationUtility m_locUtil;
 	public String m_currentLocation;
 	public String m_destPhoneNumber;
 	public String mName;
 	public int m_count;
-	
+
 	@Override
 	public void onCreate() {
 
 	}
-	
+
 	@Override
-	public int onStartCommand(Intent intent, int i1, int i2) {
+	public int onStartCommand(Intent intent, int i1, int i2) 
+	{
 		Bundle extras = intent.getExtras();
 		m_destPhoneNumber = extras.getString("phoneNumber");
 		String destinationLocation = extras.getString("location");

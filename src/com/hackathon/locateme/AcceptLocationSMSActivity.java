@@ -1,4 +1,6 @@
-package com.hackathon.photohunt;
+package com.hackathon.locateme;
+
+import com.hackathon.photohunt.R;
 
 import android.app.Activity;
 import android.os.Bundle;
