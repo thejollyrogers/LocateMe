@@ -3,7 +3,6 @@ package com.hackathon.locateme;
 import java.io.IOException;
 
 import com.hackathon.locateme.utility.SmsUtility;
-import com.hackathon.photohunt.R;
 
 import android.app.Activity;
 import android.content.ContentResolver;

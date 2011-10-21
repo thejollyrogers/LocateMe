@@ -2,7 +2,6 @@ package com.hackathon.locateme;
 
 import com.hackathon.locateme.services.IncomingUpdateService;
 import com.hackathon.locateme.utility.LocationUtility;
-import com.hackathon.photohunt.R;
 
 import android.app.Activity;
 import android.content.Intent;

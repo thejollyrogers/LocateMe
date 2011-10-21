@@ -11,7 +11,6 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 import com.hackathon.locateme.utility.LocationUtility;
-import com.hackathon.photohunt.R;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;

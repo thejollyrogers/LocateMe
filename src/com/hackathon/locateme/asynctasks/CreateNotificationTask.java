@@ -10,8 +10,8 @@ import android.util.Log;
 
 import com.hackathon.locateme.AcceptLocationSMSActivity;
 import com.hackathon.locateme.GlobalConstants;
+import com.hackathon.locateme.R;
 import com.hackathon.locateme.utility.LocationUtility;
-import com.hackathon.photohunt.R;
 
 public class CreateNotificationTask extends AsyncTask<Void, Void, Void> {
 	

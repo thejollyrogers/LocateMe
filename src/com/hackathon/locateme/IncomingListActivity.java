@@ -14,7 +14,6 @@ import android.widget.SimpleCursorAdapter;
 
 import com.hackathon.locateme.utility.IncomingDBAdapter;
 import com.hackathon.locateme.utility.LocationUtility;
-import com.hackathon.photohunt.R;
 
 public class IncomingListActivity extends ListActivity {
 	

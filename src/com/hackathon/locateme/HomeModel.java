@@ -16,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.hackathon.locateme.utility.LocationUtility;
-import com.hackathon.photohunt.R;
 
 public class HomeModel implements Closeable
 {
