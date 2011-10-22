@@ -16,14 +16,29 @@ public final class SmsUtility
 		manager.sendTextMessage(sendNumber, null, message, null, null);
 	}
 	
-	public static void sendLocationUpdateText(String sendNumber, String myNumber, String location, String eta, String name)
+	public static void sendLocationUpdateText(String sendNumber, String myNumber, String location, String eta)
 	{
 		SmsManager manager = SmsManager.getDefault();
 		String message = GlobalConstants.SMS_APP_UPDATE_IDENTIFIER +
 				"\n" + myNumber +
 				"\n" + location +
-				"\n" + eta +
-				"\n" + name;
+				"\n" + eta;
+		manager.sendTextMessage(sendNumber, null, message, null, null);
+	}
+	
+	public static void sendDeclinedLocationText(String sendNumber, String myNumber)
+	{
+		SmsManager manager = SmsManager.getDefault();
+		String message = GlobalConstants.SMS_APP_DECLINE_LOCATION +
+				"\n" + myNumber;
+		manager.sendTextMessage(sendNumber, null, message, null, null);
+	}
+	
+	public static void sendAcceptedLocationtext(String sendNumber, String myNumber)
+	{
+		SmsManager manager = SmsManager.getDefault();
+		String message = GlobalConstants.SMS_APP_ACCEPTED_LOCATION +
+				"\n" + myNumber;
 		manager.sendTextMessage(sendNumber, null, message, null, null);
 	}
 }
