@@ -81,7 +81,7 @@ public class CreateNotificationTask extends AsyncTask<Void, Void, Void> {
 			db.deleteEntry(cur.getInt(cur.getColumnIndex(IncomingDBAdapter.KEY_ROWID)));
 			db.close();
 			i = new Intent(mContext, HomeActivity.class);
-			
+
 			mMessage = name + " did not accept your location.";
 			mTitle = "Incoming contact accepted";
 			break;
@@ -89,12 +89,15 @@ public class CreateNotificationTask extends AsyncTask<Void, Void, Void> {
 			db = new IncomingDBAdapter(mContext);
 			db.open();
 			cur = db.fetchEntry(phoneNumber);
-			name = cur.getString(cur.getColumnIndex(IncomingDBAdapter.KEY_NAME));
-			db.updateEntry(cur.getColumnIndex(IncomingDBAdapter.KEY_ROWID),
-					null, null, "true");
+			int nameindex = cur.getColumnIndex(IncomingDBAdapter.KEY_NAME);
+			Log.d(TAG, "nameindex = " + nameindex);
+			name = cur.getString(2);
+			int rowindex = cur.getColumnIndex(IncomingDBAdapter.KEY_ROWID);
+			Log.d(TAG, "rowindex = " + rowindex);
+			db.updateEntry(0, null, null, "true");
 			db.close();
 			i = new Intent(mContext, IncomingListActivity.class);
-			
+
 			mMessage = name + " accepted your location";
 			mTitle = "Incoming contact accepted";
 		}

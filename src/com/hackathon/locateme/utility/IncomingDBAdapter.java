@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class IncomingDBAdapter {
 
@@ -15,6 +16,8 @@ public class IncomingDBAdapter {
     public static final String KEY_ETA = "eta";
     public static final String KEY_ROWID = "_id";
     public static final String KEY_ACCEPTED = "accepted";
+    
+    private static final String TAG = IncomingDBAdapter.class.getName();
     
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase mDb;
@@ -94,16 +97,30 @@ public class IncomingDBAdapter {
      * Implementing this method to easily get a row by phone number because 
      * i don't want to reimplement the primary key as a string, I want to go drink.
      */
-    public Cursor fetchEntry(String phoneNumber) throws SQLException {
+    public Cursor fetchEntry(String phoneNumber) throws SQLException 
+    {
         Cursor mCursor =
-                mDb.query(true, DATABASE_TABLE, new String[] {KEY_ROWID, KEY_PHONE_NUMBER,
-                        KEY_NAME, KEY_LOCATION, KEY_ETA, KEY_ACCEPTED}, KEY_PHONE_NUMBER + "=" + phoneNumber, null,
-                        null, null, null, null);
-            if (mCursor != null) {
-                mCursor.moveToFirst();
-            }
-            return mCursor;
+                mDb.query(true,
+                		DATABASE_TABLE,
+                		new String[] {KEY_ROWID, KEY_PHONE_NUMBER, KEY_NAME, KEY_LOCATION, KEY_ETA, KEY_ACCEPTED}, 
+                        KEY_PHONE_NUMBER + "=" + phoneNumber,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null);
+        
+        if (mCursor != null) 
+        {
+        	Log.d(TAG, "fetching cursor entry by phone number is not null");
+            mCursor.moveToFirst();
         }
+        else
+        {
+        	Log.d(TAG, "cursor is null. yikes.");
+        }
+        return mCursor;
+    }
     
     public Cursor fetchAllEntries() {
         return mDb.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_PHONE_NUMBER, KEY_NAME,
