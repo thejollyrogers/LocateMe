@@ -29,7 +29,9 @@ public class SMSReceiver extends BroadcastReceiver {
             // first message, do some pattern matching
             String firstMsg = SmsMessage.createFromPdu((byte[])pdus[0]).getMessageBody().toString();
             boolean condition = firstMsg.startsWith(GlobalConstants.SMS_APP_IDENTIFIER) || 
-            		firstMsg.startsWith(GlobalConstants.SMS_APP_UPDATE_IDENTIFIER);
+            		firstMsg.startsWith(GlobalConstants.SMS_APP_UPDATE_IDENTIFIER) ||
+            		firstMsg.startsWith(GlobalConstants.SMS_APP_DECLINE_LOCATION) ||
+            		firstMsg.startsWith(GlobalConstants.SMS_APP_ACCEPTED_LOCATION);
             if (condition) {
             	this.abortBroadcast();
                 for (int i=0; i<msgs.length; i++){
@@ -41,13 +43,26 @@ public class SMSReceiver extends BroadcastReceiver {
                 }
                 if(firstMsg.startsWith(GlobalConstants.SMS_APP_IDENTIFIER))
                 {
-                	CreateNotificationTask c = new CreateNotificationTask(context, str);
+                	CreateNotificationTask c = new CreateNotificationTask(context, str, 
+                			CreateNotificationTask.INCOMING_LOCATION);
                 	c.execute();
                 }
                 else if(firstMsg.startsWith(GlobalConstants.SMS_APP_UPDATE_IDENTIFIER))
                 {
                 	ParseLocationUpdateTextTask task = new ParseLocationUpdateTextTask(context, str);
                 	task.execute();
+                }
+                else if(firstMsg.startsWith(GlobalConstants.SMS_APP_DECLINE_LOCATION))
+                {
+                	CreateNotificationTask c = new CreateNotificationTask(context, str,
+                			CreateNotificationTask.DECLINED_LOCATION);
+                	c.execute();
+                }
+                else if(firstMsg.startsWith(GlobalConstants.SMS_APP_ACCEPTED_LOCATION))
+                {
+                	CreateNotificationTask c = new CreateNotificationTask(context, str,
+                			CreateNotificationTask.ACCEPTED_LOCATION);
+                	c.execute();
                 }
             	
             }
