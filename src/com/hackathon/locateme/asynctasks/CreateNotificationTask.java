@@ -37,7 +37,6 @@ public class CreateNotificationTask extends AsyncTask<Void, Void, Void> {
 		mContext = context;
 		mData = data.split("\n");
 		mIntent = createNotificationIntent(type);
-		Log.d(TAG, "converted coordinates: " + mCoordinates[0] + ", " + mCoordinates[1]);
 	}
 
 	@Override
