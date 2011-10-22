@@ -14,6 +14,7 @@ public class IncomingDBAdapter {
     public static final String KEY_LOCATION = "location";
     public static final String KEY_ETA = "eta";
     public static final String KEY_ROWID = "_id";
+    public static final String KEY_ACCEPTED = "accepted";
     
     private static final String TAG = "IncomingDBAdapter";
     private DatabaseHelper mDbHelper;
@@ -21,7 +22,7 @@ public class IncomingDBAdapter {
     
     private static final String DATABASE_CREATE =
         "create table incomingInfo (_id integer primary key autoincrement, "
-        + "phoneNumber text, name text, location text, eta text);";
+        + "phoneNumber text, name text, location text, eta text, accepted text);";
     
 	private static final String DATABASE_NAME = "incomingDB";
     private static final String DATABASE_TABLE = "incomingInfo";
@@ -63,12 +64,13 @@ public class IncomingDBAdapter {
         mDbHelper.close();
     }
     
-    public long createEntry(String name, String phoneNumber, String location, String eta) {
+    public long createEntry(String name, String phoneNumber, String location, String eta, String accepted) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_PHONE_NUMBER, phoneNumber);
         initialValues.put(KEY_NAME, name);
         initialValues.put(KEY_LOCATION, location);
         initialValues.put(KEY_ETA, eta);
+        initialValues.put(KEY_ACCEPTED, accepted);
 
         return mDb.insert(DATABASE_TABLE, null, initialValues);
     }
@@ -81,7 +83,7 @@ public class IncomingDBAdapter {
     public Cursor fetchEntry(long rowid) throws SQLException {
         Cursor mCursor =
             mDb.query(true, DATABASE_TABLE, new String[] {KEY_ROWID, KEY_PHONE_NUMBER,
-                    KEY_NAME, KEY_LOCATION, KEY_ETA}, KEY_ROWID + "=" + rowid, null,
+                    KEY_NAME, KEY_LOCATION, KEY_ETA, KEY_ACCEPTED}, KEY_ROWID + "=" + rowid, null,
                     null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -89,15 +91,31 @@ public class IncomingDBAdapter {
         return mCursor;
     }
     
+    /*
+     * Implementing this method to easily get a row by phone number because 
+     * i don't want to reimplement the primary key as a string, I want to go drink.
+     */
+    public Cursor fetchEntry(String phoneNumber) throws SQLException {
+        Cursor mCursor =
+                mDb.query(true, DATABASE_TABLE, new String[] {KEY_ROWID, KEY_PHONE_NUMBER,
+                        KEY_NAME, KEY_LOCATION, KEY_ETA, KEY_ACCEPTED}, KEY_PHONE_NUMBER + "=" + phoneNumber, null,
+                        null, null, null, null);
+            if (mCursor != null) {
+                mCursor.moveToFirst();
+            }
+            return mCursor;
+        }
+    
     public Cursor fetchAllEntries() {
         return mDb.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_PHONE_NUMBER, KEY_NAME,
-                 KEY_LOCATION, KEY_ETA}, null, null, null, null, null);
+                 KEY_LOCATION, KEY_ETA, KEY_ACCEPTED}, null, null, null, null, null);
     }
     
-    public boolean updateEntry(long rowid, String location, String eta) {
+    public boolean updateEntry(long rowid, String location, String eta, String accepted) {
         ContentValues args = new ContentValues();
         args.put(KEY_LOCATION, location);
         args.put(KEY_ETA, eta);
+        args.put(KEY_ACCEPTED, true);
 
         return mDb.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowid, null) > 0;
     }
