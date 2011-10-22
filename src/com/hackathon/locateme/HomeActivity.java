@@ -116,8 +116,9 @@ public class HomeActivity extends Activity {
 	    		    }
 	    		    // store name/phoneNumber for pending incoming
 	    		    IncomingDBAdapter db = new IncomingDBAdapter(this);
+	    		    db.open();
 	    		    db.createEntry(name, theirNumber, null, null, "false");
-	    		    
+	    		    db.close();
 	    		    String myLocation = m_model.getCurrentLocation();
 	    		    if(myLocation != null)
 	    		    {
