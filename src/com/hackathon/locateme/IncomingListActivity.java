@@ -1,16 +1,15 @@
 package com.hackathon.locateme;
 
-import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import com.hackathon.locateme.utility.IncomingDBAdapter;
 import com.hackathon.locateme.utility.LocationUtility;
@@ -40,8 +39,8 @@ public class IncomingListActivity extends ListActivity {
         setListAdapter(notes);
 	}
 	
-	public void createEntry(String name, String phoneNumber, String location, String eta) {
-		mDbHelper.createEntry(name, phoneNumber, location, eta);
+	public void createEntry(String name, String phoneNumber, String location, String eta, String accepted) {
+		mDbHelper.createEntry(name, phoneNumber, location, eta, accepted);
 		fillData();
 	}
 	
@@ -54,11 +53,13 @@ public class IncomingListActivity extends ListActivity {
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        switch(item.getItemId()) {
+        switch(item.getItemId()) 
+        {
         case 1:
-        	mDbHelper.createEntry("Franklin", "1234567888", "47.658169,-122.303624", "");
-        	mDbHelper.createEntry("Andrew", "1234567890", "47.658349,-122.318548", "");
+        	mDbHelper.createEntry("Franklin", "1234567888", "47.658169,-122.303624", "", "true");
+        	mDbHelper.createEntry("Andrew", "1234567890", "47.658349,-122.318548", "", "true");
             return true;
+        
     }
 
     return super.onMenuItemSelected(featureId, item);
@@ -69,12 +70,18 @@ public class IncomingListActivity extends ListActivity {
     	Cursor c = mDbHelper.fetchEntry(id);
     	String name = c.getString(2);
     	String location = c.getString(3);
-    	
-//    	AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-//    	alertDialog.setTitle("Item Selected");
-//    	alertDialog.setMessage(name + " " + location);
-//    	alertDialog.show();
-  
+    	String accepted = c.getString(c.getColumnIndex(IncomingDBAdapter.KEY_ACCEPTED));
+    	if(accepted.equals("false"))
+    	{
+    		Toast t = Toast.makeText(this, name + " hasn't accepted your location yet.", Toast.LENGTH_SHORT);
+    		t.show();
+    		return;
+    	}
+    	else if(location == null)
+    	{
+    		Toast t = Toast.makeText(this, name + "'s location hasn't been established yet.", Toast.LENGTH_SHORT);
+    	}
+
     	double[] coordinates = LocationUtility.convertStringToLatLong(location);
     	Intent intent = new Intent(this, MapLocationActivity.class);
     	intent.setAction(GlobalConstants.INCOMING);
