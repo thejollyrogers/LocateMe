@@ -13,8 +13,10 @@ import android.provider.ContactsContract;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hackathon.locateme.services.IncomingUpdateService;
 import com.hackathon.locateme.utility.LocationUtility;
 
 public class HomeModel implements Closeable
@@ -38,14 +40,27 @@ public class HomeModel implements Closeable
 	public void attachViewsToActivity()
 	{
 		m_send = (RelativeLayout) m_activity.findViewById(R.id.send_button);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(m_activity);
+		String location = prefs.getString(GlobalConstants.SHARED_PREF_DESTINATION_KEY, null);
+		final Intent sendIntent;
+		if(prefs != null && location != null)
+		{
+			m_send.setBackgroundDrawable(m_activity.getResources().getDrawable(R.drawable.background_gradient_drawable_stop_service));
+			TextView text = (TextView) m_send.findViewById(R.id.send_text);
+			text.setText("STOP");
+			sendIntent = new Intent(m_activity, IncomingUpdateService.class);
+		}
+		else
+		{
+			sendIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+		}
 		m_send.setOnClickListener(new OnClickListener()
 		{
 
 			@Override
 			public void onClick(View v)
 			{
-				Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-				m_activity.startActivityForResult(intent, HomeActivity.CONTACT_RESULT);
+				m_activity.startActivityForResult(sendIntent, HomeActivity.CONTACT_RESULT);
 			}
 
 		});
