@@ -1,15 +1,16 @@
 package com.hackathon.locateme;
 
-import com.hackathon.locateme.services.IncomingUpdateService;
 import com.hackathon.locateme.utility.LocationUtility;
+import com.hackathon.locateme.utility.SharedPreferencesUtility;
+import com.hackathon.locateme.utility.SmsUtility;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -24,28 +25,33 @@ public class AcceptLocationSMSModel
 	private Button mAcceptOnly;
 	private Button mDecline;
 	private TextView mAcceptText;
-	private String mPhoneNumber;
+	private String mDestNumber;
+	private String mMyNumber;
+	private String mLocationString;
 
 	private double[] mLocation;
-	private String mLocationString;
-	private boolean mSendLocation;
-	private String mName;
+	private SharedPreferencesUtility mPrefs;
 
 	
-	public AcceptLocationSMSModel(Activity activity, String phoneNumber, double[] location, String name)
+	public AcceptLocationSMSModel(Activity activity, String phoneNumber, double[] location)
 	{
 		mActivity = activity;
-		mPhoneNumber = phoneNumber;
+		mDestNumber = phoneNumber;
 		mLocation = location;
-		mName = name;
-
+		mLocationString = LocationUtility.convertLatLongToString(location[0], location[1]);
+		mPrefs = new SharedPreferencesUtility(mActivity);
+		
+		TelephonyManager mTelephonyMgr = 
+				(TelephonyManager) mActivity.getSystemService(Context.TELEPHONY_SERVICE);
+		mMyNumber = mTelephonyMgr.getLine1Number();
+		
 		attachViewsToActivity();
 	}
 	
 	public void attachViewsToActivity()
 	{
 		mAcceptText = (TextView) mActivity.findViewById(R.id.accept_sms_text_view);
-		mAcceptText.setText("Phone number " + mPhoneNumber + " has sent you their location." +
+		mAcceptText.setText("Phone number " + mDestNumber + " has sent you their location." +
 				" Would you like to accept and allow them to view your location?");
 		mAcceptAndAllow = (Button) mActivity.findViewById(R.id.accept_and_allow_button);
 		mAcceptAndAllow.setOnClickListener(new OnClickListener()
@@ -54,24 +60,15 @@ public class AcceptLocationSMSModel
 			@Override
 			public void onClick(View v)
 			{
-				mSendLocation = true;
-				
-				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
-				Editor prefEdit = prefs.edit();
-				prefEdit.putString(GlobalConstants.SHARED_PREF_DESTINATION_KEY, LocationUtility.convertLatLongToString(mLocation[0], mLocation[1]));
-				prefEdit.putString(GlobalConstants.SHARED_PREF_PHONE_NUMBER_KEY, mPhoneNumber);
-				prefEdit.commit();
-				
+				Log.d(TAG, "Accepting the location and allowing post back data");
+				mPrefs.setDestinationLocation(mLocationString);
+				mPrefs.setDestinationPhoneNumber(mDestNumber);
+				mPrefs.setOkayToSendLocation(true);
+
+				SmsUtility.sendAcceptedLocationtext(mDestNumber, mMyNumber);
 				startServiceTask();
 				
-//				Intent intent = new Intent(mActivity, MapLocationActivity.class);
-//				intent.putExtra(GlobalConstants.PHONE_NUMBER_KEY, mPhoneNumber);
-//				intent.putExtra(GlobalConstants.LOCATION_KEY, mLocation);
-//				intent.putExtra(GlobalConstants.IS_LOCATION_UPDATING_KEY, true);
-//				mActivity.startActivity(intent);
-//				String directions="http://maps.google.com/maps?daddr="+mLocation[0]+","+mLocation[1];
-//				intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-				
+				Log.d(TAG, "Opening route guidance");
 				String directions="google.navigation:q=" + mLocation[0] + "," + mLocation[1] + "&mode=w";
 				Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
 				intent.setData(Uri.parse(directions));
@@ -86,30 +83,21 @@ public class AcceptLocationSMSModel
 			@Override
 			public void onClick(View v)
 			{
-				mSendLocation = false;
+				Log.d(TAG, "Accepting location and rejecting post back data.");
+				mPrefs.setDestinationLocation(mLocationString);
+				mPrefs.setDestinationPhoneNumber(mDestNumber);
+				mPrefs.setOkayToSendLocation(true);
 				
-				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
-				Editor prefEdit = prefs.edit();
-				prefEdit.putString(GlobalConstants.SHARED_PREF_DESTINATION_KEY, LocationUtility.convertLatLongToString(mLocation[0], mLocation[1]));
-				prefEdit.putString(GlobalConstants.SHARED_PREF_PHONE_NUMBER_KEY, mPhoneNumber);
-				prefEdit.commit();
-				
+				SmsUtility.sendAcceptedLocationtext(mDestNumber, mMyNumber);
 				startServiceTask();
-				
-//				Intent intent = new Intent(mActivity, MapLocationActivity.class);
-//				intent.putExtra(GlobalConstants.PHONE_NUMBER_KEY, mPhoneNumber);
-//				intent.putExtra(GlobalConstants.LOCATION_KEY, mLocation);
-//				intent.putExtra(GlobalConstants.IS_LOCATION_UPDATING_KEY, true);
-//				mActivity.startActivity(intent);
-//				String directions="http://maps.google.com/maps?daddr="+mLocation[0]+","+mLocation[1];
-//				intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-				
+
+				Log.d(TAG, "Opening route guidance");
 				String directions="google.navigation:q=" + mLocation[0] + "," + mLocation[1] + "&mode=w";
 				Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
 				intent.setData(Uri.parse(directions));
 				mActivity.startActivity(intent);
 			}
-			
+
 		});
 		mDecline = (Button) mActivity.findViewById(R.id.decline_button);
 		mDecline.setOnClickListener(new OnClickListener()
@@ -118,6 +106,9 @@ public class AcceptLocationSMSModel
 			@Override
 			public void onClick(View v)
 			{
+				Log.d(TAG, "Declining location, sending decline text and home activity");
+
+				SmsUtility.sendDeclinedLocationText(mDestNumber,mMyNumber);
 				mActivity.startActivity( new Intent(mActivity, HomeActivity.class));
 			}
 			
@@ -127,8 +118,7 @@ public class AcceptLocationSMSModel
 	public void startServiceTask()
 	{
 		StartServiceTask serviceTask = new StartServiceTask();
-		String[] params = {mPhoneNumber, mLocationString};
-		serviceTask.execute(params);
+		serviceTask.execute();
 	}
 	
 	public void releaseViewsFromActivity()
@@ -145,17 +135,14 @@ public class AcceptLocationSMSModel
 		mActivity = activity;
 	}
 	
-	public class StartServiceTask extends AsyncTask<String, Void, Void>
+	public class StartServiceTask extends AsyncTask<Void, Void, Void>
 	{
 
 		@Override
-		protected Void doInBackground(String... params)
+		protected Void doInBackground(Void... params)
 		{
 			Intent intent = new Intent();
 			intent.setAction("com.hackathon.locateme.services.IncomingUpdateService");
-			intent.putExtra("phoneNumber", mPhoneNumber);
-			intent.putExtra("location", mLocationString);
-			intent.putExtra("name", mName);
 			mActivity.startService(intent);
 			return null;
 		}
