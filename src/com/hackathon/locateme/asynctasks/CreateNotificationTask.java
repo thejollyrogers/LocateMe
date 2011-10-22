@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.hackathon.locateme.AcceptLocationSMSActivity;
 import com.hackathon.locateme.GlobalConstants;
@@ -27,7 +26,6 @@ public class CreateNotificationTask extends AsyncTask<Void, Void, Void> {
 	
 	private Context mContext;
 	private String mPhoneNumber;
-	private String mName;
 	private String mMessage;
 	private String mTitle;
 	private String[] mData;

@@ -16,7 +16,6 @@ public class IncomingDBAdapter {
     public static final String KEY_ROWID = "_id";
     public static final String KEY_ACCEPTED = "accepted";
     
-    private static final String TAG = "IncomingDBAdapter";
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase mDb;
     

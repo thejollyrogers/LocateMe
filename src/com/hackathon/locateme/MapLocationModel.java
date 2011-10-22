@@ -12,10 +12,8 @@ import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 import com.hackathon.locateme.utility.LocationUtility;
 
-import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MapLocationModel implements Closeable {
@@ -29,7 +27,6 @@ public class MapLocationModel implements Closeable {
 	private String mOthersPhoneNumber;
 	private String mOthersName;
 	private String mTitleBarText;
-	private LinearLayout mLinearLayout;
 	private String mAction;
 	 // the destination point when 'outgoing'
 	private GeoPoint mDestPoint;

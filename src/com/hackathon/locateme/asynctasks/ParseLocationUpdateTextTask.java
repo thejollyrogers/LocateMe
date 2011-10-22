@@ -1,7 +1,6 @@
 package com.hackathon.locateme.asynctasks;
 
 import com.hackathon.locateme.utility.IncomingDBAdapter;
-import com.hackathon.locateme.utility.LocationUtility;
 
 import android.content.Context;
 import android.database.Cursor;

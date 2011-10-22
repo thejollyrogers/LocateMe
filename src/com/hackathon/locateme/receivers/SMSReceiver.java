@@ -3,15 +3,12 @@ package com.hackathon.locateme.receivers;
 import com.hackathon.locateme.GlobalConstants;
 import com.hackathon.locateme.asynctasks.CreateNotificationTask;
 import com.hackathon.locateme.asynctasks.ParseLocationUpdateTextTask;
-import com.hackathon.locateme.utility.IncomingDBAdapter;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
-import android.util.Log;
-import android.widget.Toast;
 
 public class SMSReceiver extends BroadcastReceiver {
 	
