@@ -14,7 +14,7 @@ public class ParseLocationUpdateTextTask extends
 	private static final String TAG = ParseLocationUpdateTextTask.class.getName();
 
 	private Context mContext;
-	private String mName;
+	private String mEta;
 	private String mPhoneNumber;
 	private String mCoordinates;
 	
@@ -26,7 +26,7 @@ public class ParseLocationUpdateTextTask extends
 		Log.d(TAG, "dataArray length: " + dataArray.length);
 		mPhoneNumber = dataArray[1];
 		mCoordinates = dataArray[2];
-		mName = dataArray[3];
+		mEta = dataArray[3];
 	}
 	
 	@Override
@@ -34,17 +34,17 @@ public class ParseLocationUpdateTextTask extends
 	{
 		IncomingDBAdapter mDbHelper = new IncomingDBAdapter(mContext);
 		mDbHelper.open();
-		Cursor cur = mDbHelper.fetchAllEntries();
-		Log.d("important", "we are about to try the cursor");
-		if(cur != null)
+		Cursor cur = mDbHelper.fetchEntry(mPhoneNumber);
+		if(cur == null)
 		{
-				Log.d("important", "creating a new entry");
-				mDbHelper.createEntry(mPhoneNumber, mName , mCoordinates, null);
+			// do we want to create a new record? 
+			Log.e(TAG, "Somehow the record for this incoming got deleted, create new record.");
+			// don't have name data, just use phone number
+			mDbHelper.createEntry(mPhoneNumber, mPhoneNumber, mCoordinates, mEta, "true");
 		}
 		else
 		{
-			Log.d("important", "creating a new entry");
-			mDbHelper.createEntry(mPhoneNumber, mName , mCoordinates, null);
+			mDbHelper.updateEntry(cur.getInt(0), mCoordinates, mEta, "true");
 		}
 		
 		return null;
