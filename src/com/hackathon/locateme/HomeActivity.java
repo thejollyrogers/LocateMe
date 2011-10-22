@@ -11,10 +11,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.hackathon.locateme.services.IncomingUpdateService;
+import com.hackathon.locateme.utility.IncomingDBAdapter;
 import com.hackathon.locateme.utility.SmsUtility;
 
 public class HomeActivity extends Activity {
@@ -74,8 +76,16 @@ public class HomeActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
     	if(requestCode == CONTACT_RESULT)
+    	{
     		if(resultCode == Activity.RESULT_OK)
     		{
+    			/*
+    			 * Get the selected contacts name and phone number, and save this to the incoming database.
+    			 * Send the text message info.
+    			 * 
+    			 * TODO check their phone number against the database record (server side). if they have
+    			 * downloaded the app, send parseable text message, otherwise send human readable.
+    			 */
     			String theirNumber = null;
     			String name = null;
     			// get contact data, create SMS and send
@@ -83,49 +93,59 @@ public class HomeActivity extends Activity {
     			ContentResolver cr = getContentResolver();
     			Cursor cur = cr.query(uri,
     	                null, null, null, null);
-    	        if (cur.getCount() > 0) {
-    		    while (cur.moveToNext()) 
-    		    {
-    		        String id = cur.getString(
-    	                        cur.getColumnIndex(ContactsContract.Contacts._ID));
-    		        name = cur.getString(
-    	                        cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-	    	 		if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) 
-	    	 		{
-	    	 			Cursor pCur = cr.query(
-	    	 		 		    ContactsContract.CommonDataKinds.Phone.CONTENT_URI, 
-	    	 		 		    null, 
-	    	 		 		    ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?", 
-	    	 		 		    new String[]{id}, null);
-	    	 		 	        while (pCur.moveToNext()) {
-	    	 		 		       theirNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-	    	 		 	        } 
-	    	 		 	        pCur.close();
-	    	 	    }
+    	        if (cur.getCount() > 0)
+    	        {
+	    		    while (cur.moveToNext()) 
+	    		    {
+	    		        String id = cur.getString(
+	    	                        cur.getColumnIndex(ContactsContract.Contacts._ID));
+	    		        name = cur.getString(
+	    	                        cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+		    	 		if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) 
+		    	 		{
+		    	 			Cursor pCur = cr.query(
+		    	 		 		    ContactsContract.CommonDataKinds.Phone.CONTENT_URI, 
+		    	 		 		    null, 
+		    	 		 		    ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?", 
+		    	 		 		    new String[]{id}, null);
+		    	 		 	        while (pCur.moveToNext()) {
+		    	 		 		       theirNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+		    	 		 	        } 
+		    	 		 	        pCur.close();
+		    	 	    }
+	    		    }
+	    		    // store name/phoneNumber for pending incoming
+	    		    IncomingDBAdapter db = new IncomingDBAdapter(this);
+	    		    db.createEntry(name, theirNumber, null, null, "false");
+	    		    
+	    		    String myLocation = m_model.getCurrentLocation();
+	    		    if(myLocation != null)
+	    		    {
+	    		    	TelephonyManager mTelephonyMgr;
+				        mTelephonyMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE); 
+				        String myNumber = mTelephonyMgr.getLine1Number();
+				    	SmsUtility.sendLocationText(theirNumber, myNumber, myLocation, name);
+	    		    }
+	    		    else
+	    		    {
+	    		    	m_model.createErrorToast(R.string.no_location);
+	    		    }
+
     	        }
-    		    String location = m_model.getCurrentLocation();
-    		    if(location != null)
-    		    {
-    		    	 TelephonyManager mTelephonyMgr;
-    		         mTelephonyMgr = (TelephonyManager)
-    		                 getSystemService(Context.TELEPHONY_SERVICE); 
-    		         String number = mTelephonyMgr.getLine1Number();
-    		    	SmsUtility.sendLocationText(theirNumber, number, location, name);
-    		    }
-    		    else
-    		    {
-    		    	m_model.createErrorToast(R.string.no_location);
-    		    }
-    		    
-    	 	}
+    	        else
+    	        {
+    	        	Log.e(TAG, "Weird error, no contacts in cursor.");
+    	        	throw new IllegalStateException();
+    	        }
     		}
     		else
     		{
     			// error, make error toast
     			m_model.createErrorToast(R.string.contact_retrieval_error);
     		}
+    	}
     }
-    
+   
     @Override
 	protected void onDestroy()
     {
