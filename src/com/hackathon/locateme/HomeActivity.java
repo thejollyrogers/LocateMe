@@ -2,18 +2,20 @@ package com.hackathon.locateme;
 
 import java.io.IOException;
 
-import com.hackathon.locateme.utility.SmsUtility;
-
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.telephony.TelephonyManager;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import com.hackathon.locateme.services.IncomingUpdateService;
+import com.hackathon.locateme.utility.SmsUtility;
 
 public class HomeActivity extends Activity {
 	
@@ -22,6 +24,7 @@ public class HomeActivity extends Activity {
 	
 	private HomeModel m_model;
 	private boolean m_isRetainingNonConfig;
+	private final int STOP_SERVICE = 1;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,25 @@ public class HomeActivity extends Activity {
     	m_isRetainingNonConfig = true;
         m_model.releaseViewsFromActivity();
         return m_model;
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        boolean result = super.onCreateOptionsMenu(menu);
+        menu.add(0, STOP_SERVICE  , 0, "Kill location broadcast service.");
+        return result;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case STOP_SERVICE:
+        	Intent stopBroadcasting = new Intent(this, IncomingUpdateService.class);
+            this.stopService(stopBroadcasting);
+            return true;
+        }
+       
+        return super.onOptionsItemSelected(item);
     }
     
     @Override
